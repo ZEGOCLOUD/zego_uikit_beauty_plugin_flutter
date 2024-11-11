@@ -1,0 +1,2 @@
+/// ZegoUIKitBeautyConfig
+class ZegoUIKitBeautyConfig {}
