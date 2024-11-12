@@ -7,8 +7,8 @@ import 'package:zego_plugin_adapter/zego_plugin_adapter.dart';
 // Project imports:
 import 'package:zego_uikit_beauty_plugin/src/define.dart';
 import 'package:zego_uikit_beauty_plugin/src/internal/core.dart';
-import 'package:zego_uikit_beauty_plugin/src/method_channel.dart';
 import 'package:zego_uikit_beauty_plugin/src/log/logger_service.dart';
+import 'package:zego_uikit_beauty_plugin/src/method_channel.dart';
 
 class ZegoUIKitBeautyPlugin implements ZegoBeautyPluginInterface {
   factory ZegoUIKitBeautyPlugin() => instance;
