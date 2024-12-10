@@ -1,3 +1,7 @@
+## 1.7.6
+
+- Update dependency
+
 ## 1.7.5
 
 - Missing concrete API

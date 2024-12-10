@@ -1,6 +1,6 @@
 name: zego_uikit_beauty_plugin
 description: ZegoUIKitBeautyPlugin is a low-code beauty collection, which helps you to integarte features easier and faster.
-version: 1.7.5
+version: 1.7.6
 homepage: https://www.zegocloud.com/
 
 environment:
@@ -13,7 +13,7 @@ dependencies:
   plugin_platform_interface: ^2.1.8
   
   zego_effects_plugin: ^1.0.14
-  zego_plugin_adapter: ^2.13.4
+  zego_plugin_adapter: ^2.13.5
   shared_preferences: ^2.2.2
   path_provider_android: ^2.2.0
   
