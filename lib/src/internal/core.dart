@@ -16,9 +16,9 @@ import 'package:zego_uikit_beauty_plugin/src/internal/effect_cache.dart';
 import 'package:zego_uikit_beauty_plugin/src/internal/effect_setting.dart';
 import 'package:zego_uikit_beauty_plugin/src/internal/license.dart';
 import 'package:zego_uikit_beauty_plugin/src/internal/ui_display.dart';
+import 'package:zego_uikit_beauty_plugin/src/log/logger_service.dart';
 import 'package:zego_uikit_beauty_plugin/src/method_channel.dart';
 import 'package:zego_uikit_beauty_plugin/src/models/model.dart';
-import 'package:zego_uikit_beauty_plugin/src/log/logger_service.dart';
 
 class ZegoUIKitBeautyCore {
   int appID = 0;
