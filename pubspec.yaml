@@ -13,7 +13,7 @@ dependencies:
   plugin_platform_interface: ^2.1.8
   
   zego_effects_plugin: ^1.0.14
-  zego_plugin_adapter: ^2.13.7
+  zego_plugin_adapter: ^2.13.9
   shared_preferences: ^2.2.2
   path_provider_android: ^2.2.0
   
