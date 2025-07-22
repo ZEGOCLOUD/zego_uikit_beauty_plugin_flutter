@@ -1,3 +1,8 @@
+## 1.7.7
+
+- Bugs
+  - Fixed the issue where the menu was obscured when the navigation bar was enabled on some Android devices 
+
 ## 1.7.6
 
 - Update dependency

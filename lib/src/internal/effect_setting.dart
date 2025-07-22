@@ -315,9 +315,9 @@ class ZegoBeautyEffectValueSetting {
         break;
       case ZegoBeautyPluginEffectsType.beautyMakeupColoredContactsBrownGreen:
       case ZegoBeautyPluginEffectsType
-            .beautyMakeupColoredContactsChocolateBrown:
+          .beautyMakeupColoredContactsChocolateBrown:
       case ZegoBeautyPluginEffectsType
-            .beautyMakeupColoredContactsDarknightBlack:
+          .beautyMakeupColoredContactsDarknightBlack:
       case ZegoBeautyPluginEffectsType.beautyMakeupColoredContactsLightsBrown:
       case ZegoBeautyPluginEffectsType.beautyMakeupColoredContactsStarryBlue:
         ZegoEffectsColoredcontactsParam param =

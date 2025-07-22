@@ -28,7 +28,7 @@ class ZegoUIKitBeautyPlugin implements ZegoBeautyPluginInterface {
 
   @override
   Future<String> getVersion() async {
-    return '';
+    return '1.7.7';
   }
 
   @override

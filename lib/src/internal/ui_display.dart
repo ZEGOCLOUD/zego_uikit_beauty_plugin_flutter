@@ -26,14 +26,15 @@ class ZegoBeautyUIDisplay {
       barrierColor: Colors.transparent,
       builder: (BuildContext context) {
         return ValueListenableBuilder<ZegoBeautyMakeUpModel?>(
-            valueListenable: showMakeupItem,
-            builder: (context, makeupItemModel, _) {
-              if (makeupItemModel != null) {
-                return showMakeupUI(makeupItemModel);
-              } else {
-                return showEffectUI();
-              }
-            });
+          valueListenable: showMakeupItem,
+          builder: (context, makeupItemModel, _) {
+            return SafeArea(
+              child: makeupItemModel != null
+                  ? showMakeupUI(makeupItemModel)
+                  : showEffectUI(),
+            );
+          },
+        );
       },
     );
   }
