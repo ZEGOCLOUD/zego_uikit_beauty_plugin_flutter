@@ -61,6 +61,7 @@ class _ZegoUIKitBeautyViewState extends State<ZegoUIKitBeautyView> {
           return Container(
             color: Colors.transparent,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 if (sliderModel != null) slider(sliderModel, 30),
                 if (sliderModel != null)

@@ -1,3 +1,8 @@
+## 1.7.8
+
+- Bugs
+  - Fix the style issue of the bottom menu
+
 ## 1.7.7
 
 - Bugs
