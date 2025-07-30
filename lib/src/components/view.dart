@@ -63,23 +63,23 @@ class _ZegoUIKitBeautyViewState extends State<ZegoUIKitBeautyView> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                if (sliderModel != null) slider(sliderModel, 30),
-                if (sliderModel != null)
-                  const SizedBox(
-                    height: 20,
-                  ),
-                if (sliderModel == null)
-                  const SizedBox(
-                    height: 50,
-                  ),
+                if (sliderModel != null) ...[
+                  slider(sliderModel, 30),
+                  const SizedBox(height: 20),
+                ] else ...[
+                  const SizedBox(height: 50),
+                ],
                 Container(
-                  color: const Color.fromARGB(230, 9, 17, 28),
+                  color: ZegoUIKitBeautyPlugin
+                      .instance.core.effectsConfig.uiConfig.backgroundColor,
                   child: Column(
                     children: [
                       createOneLevelTab(),
                       createTwoLevelTab(),
                       createItemView(),
-                      const SizedBox(
+                      Container(
+                        color: ZegoUIKitBeautyPlugin.instance.core.effectsConfig
+                            .uiConfig.backgroundColor,
                         height: 20,
                       ),
                     ],
