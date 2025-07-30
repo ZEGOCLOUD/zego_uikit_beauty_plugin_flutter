@@ -17,7 +17,10 @@ dependencies:
   shared_preferences: ^2.2.2
   path_provider_android: ^2.2.0
   
-  flutter_logs: ^2.2.1
+  flutter_logs: 
+    git:
+      url: https://github.com/yoer/flutter_logs.git
+      ref: master
   
 
 dev_dependencies:

@@ -9,7 +9,7 @@ class ZegoBeautyLoggerService {
   static bool isZegoLoggerInit = false;
 
   /// initLog
-  Future<void> initLog({String folderName = 'uikit'}) async {
+  Future<void> initLog() async {
     if (isZegoLoggerInit) {
       return;
     }
@@ -30,8 +30,9 @@ class ZegoBeautyLoggerService {
               directoryStructure: DirectoryStructure.SINGLE_FILE_FOR_DAY,
               logTypesEnabled: ['device', 'network', 'errors'],
               logFileExtension: LogFileExtension.LOG,
-              logsWriteDirectoryName: 'zego_prebuilt/$folderName',
-              logsExportDirectoryName: 'zego_prebuilt/$folderName/Exported',
+              logsWriteDirectoryName: 'zego_prebuilt',
+              logsExportDirectoryName: 'zego_prebuilt/Exported',
+              useCachesDirectory: true,
               debugFileOperations: true,
               isDebuggable: true)
           .then((value) {
