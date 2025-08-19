@@ -1,3 +1,8 @@
+## 1.7.10
+
+- Features
+  - The location for generating iOS logs has been changed to the same directory as the Zego SDK, and the folder name has been changed to ZegoUIKits 
+
 ## 1.7.9
 
 - Bugs
