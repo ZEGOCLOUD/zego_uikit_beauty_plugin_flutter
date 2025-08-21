@@ -37,8 +37,22 @@
 }
 
 - (void)onCapturedUnprocessedCVPixelBuffer:(CVPixelBufferRef)buffer timestamp:(CMTime)timestamp channel:(ZGFlutterPublishChannel)channel {
-    [[ZegoEffectsMethodHandler sharedInstance] processImageBuffer:buffer];
-    [[ZegoCustomVideoProcessManager sharedInstance] sendProcessedCVPixelBuffer:buffer timestamp:timestamp channel:channel];
+    if (!buffer) {
+        NSLog(@"[ZegoBeautyPlugin] Warning: Received null buffer in onCapturedUnprocessedCVPixelBuffer");
+        return;
+    }
+    
+    if ([ZegoEffectsMethodHandler sharedInstance]) {
+        [[ZegoEffectsMethodHandler sharedInstance] processImageBuffer:buffer];
+    } else {
+        NSLog(@"[ZegoBeautyPlugin] Warning: ZegoEffectsMethodHandler is not available");
+    }
+    
+    if ([ZegoCustomVideoProcessManager sharedInstance]) {
+        [[ZegoCustomVideoProcessManager sharedInstance] sendProcessedCVPixelBuffer:buffer timestamp:timestamp channel:channel];
+    } else {
+        NSLog(@"[ZegoBeautyPlugin] Warning: ZegoCustomVideoProcessManager is not available");
+    }
 }
 
 
