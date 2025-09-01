@@ -1,3 +1,7 @@
+## 1.7.11
+
+- Update dependency
+
 ## 1.7.10
 
 - Features
