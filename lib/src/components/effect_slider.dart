@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Project imports:
 import 'package:zego_uikit_beauty_plugin/src/models/model.dart';
 import 'package:zego_uikit_beauty_plugin/zego_uikit_beauty_plugin.dart';
+import 'package:zego_uikit_beauty_plugin/src/components/screen_util/screen_util.dart';
 
 /// ZegoBeautyEffectSlider
 class ZegoBeautyEffectSlider extends StatefulWidget {
@@ -45,28 +46,29 @@ class _ZegoBeautyEffectSliderState extends State<ZegoBeautyEffectSlider> {
   Widget build(BuildContext context) {
     valueNotifier.value = widget.defaultValue;
 
-    final thumpHeight = widget.thumpHeight ?? 32;
+    final thumpHeight = widget.thumpHeight ?? 32.zH;
     return SizedBox(
-      width: 300,
+      width: 300.zW,
       height: thumpHeight,
       child: SliderTheme(
         data: SliderTheme.of(context).copyWith(
           valueIndicatorTextStyle: ZegoUIKitBeautyPlugin
               .instance.core.effectsConfig.uiConfig.sliderTextStyle,
-          valueIndicatorColor: ZegoUIKitBeautyPlugin
-              .instance.core.effectsConfig.uiConfig.sliderTextBackgroundColor,
           showValueIndicator: ShowValueIndicator.always,
           activeTrackColor: ZegoUIKitBeautyPlugin
               .instance.core.effectsConfig.uiConfig.sliderActiveTrackColor,
+          valueIndicatorColor: ZegoUIKitBeautyPlugin
+              .instance.core.effectsConfig.uiConfig.sliderTextBackgroundColor,
           inactiveTrackColor: ZegoUIKitBeautyPlugin
               .instance.core.effectsConfig.uiConfig.sliderInactiveTrackColor,
-          trackHeight: widget.trackHeight ?? 6.0,
+          trackHeight: widget.trackHeight ?? 6.0.zH,
           thumbColor: ZegoUIKitBeautyPlugin
               .instance.core.effectsConfig.uiConfig.sliderThumbColor,
           thumbShape: RoundSliderThumbShape(
-              enabledThumbRadius: ZegoUIKitBeautyPlugin
-                      .instance.core.effectsConfig.uiConfig.sliderThumbRadius ??
-                  thumpHeight / 2.0),
+            enabledThumbRadius: ZegoUIKitBeautyPlugin
+                    .instance.core.effectsConfig.uiConfig.sliderThumbRadius ??
+                thumpHeight / 3,
+          ),
         ),
         child: ValueListenableBuilder<int>(
           valueListenable: valueNotifier,

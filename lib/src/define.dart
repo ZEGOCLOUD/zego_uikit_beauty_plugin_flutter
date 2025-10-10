@@ -70,7 +70,6 @@ enum ZegoUIKitResetEffectType {
   filterNature,
   filterGray,
   filterDreamy,
-  sticker,
   background2D,
 }
 
@@ -146,11 +145,6 @@ class ZegoUIKitBeautyTranslation {
       ZegoBeautyPluginEffectsType.values.sublist(
           ZegoBeautyPluginEffectsType.filterDreamySunset.index,
           ZegoBeautyPluginEffectsType.filterDreamySweet.index + 1);
-
-  static List<ZegoBeautyPluginEffectsType> stickersEffectsTypes() =>
-      ZegoBeautyPluginEffectsType.values.sublist(
-          ZegoBeautyPluginEffectsType.stickerAnimal.index,
-          ZegoBeautyPluginEffectsType.stickerSailorMoon.index + 1);
 
   static List<ZegoBeautyPluginEffectsType> backgroundEffectsTypes() =>
       ZegoBeautyPluginEffectsType.values.sublist(
@@ -287,24 +281,6 @@ class ZegoUIKitBeautyTranslation {
           translationText.filterDreamyCozily,
       ZegoBeautyPluginEffectsType.filterDreamySweet.toString():
           translationText.filterDreamySweet,
-      ZegoBeautyPluginEffectsType.stickerAnimal.toString():
-          translationText.stickerAnimal,
-      ZegoBeautyPluginEffectsType.stickerDive.toString():
-          translationText.stickerDive,
-      ZegoBeautyPluginEffectsType.stickerCat.toString():
-          translationText.stickerCat,
-      ZegoBeautyPluginEffectsType.stickerDeer.toString():
-          translationText.stickerDeer,
-      ZegoBeautyPluginEffectsType.stickerCoolGirl.toString():
-          translationText.stickerCoolGirl,
-      ZegoBeautyPluginEffectsType.stickerClown.toString():
-          translationText.stickerClown,
-      ZegoBeautyPluginEffectsType.stickerClawMachine.toString():
-          translationText.stickerClawMachine,
-      ZegoBeautyPluginEffectsType.stickerSailorMoon.toString():
-          translationText.stickerSailorMoon,
-      ZegoBeautyPluginEffectsType.stickerWatermelon.toString():
-          translationText.stickerWatermelon,
       ZegoBeautyPluginEffectsType.backgroundGreenScreenSegmentation.toString():
           translationText.backgroundGreenScreenSegmentation,
       ZegoBeautyPluginEffectsType.backgroundPortraitSegmentation.toString():
@@ -482,24 +458,6 @@ class ZegoUIKitBeautyTranslation {
           StyleIconUrls.filterDreamyCozilyUrl,
       ZegoBeautyPluginEffectsType.filterDreamySweet.toString():
           StyleIconUrls.filterDreamySweetUrl,
-      ZegoBeautyPluginEffectsType.stickerAnimal.toString():
-          StyleIconUrls.stickerAnimalUrl,
-      ZegoBeautyPluginEffectsType.stickerDive.toString():
-          StyleIconUrls.stickerDiveUrl,
-      ZegoBeautyPluginEffectsType.stickerCat.toString():
-          StyleIconUrls.stickerCatUrl,
-      ZegoBeautyPluginEffectsType.stickerDeer.toString():
-          StyleIconUrls.stickerDeerUrl,
-      ZegoBeautyPluginEffectsType.stickerCoolGirl.toString():
-          StyleIconUrls.stickerCoolgrilUrl,
-      ZegoBeautyPluginEffectsType.stickerClown.toString():
-          StyleIconUrls.stickerClownUrl,
-      ZegoBeautyPluginEffectsType.stickerClawMachine.toString():
-          StyleIconUrls.stickerClawUrl,
-      ZegoBeautyPluginEffectsType.stickerSailorMoon.toString():
-          StyleIconUrls.stickerSailorUrl,
-      ZegoBeautyPluginEffectsType.stickerWatermelon.toString():
-          StyleIconUrls.stickerWatermelonUrl,
       ZegoBeautyPluginEffectsType.backgroundGreenScreenSegmentation.toString():
           StyleIconUrls.backgroundGreenScreenUrl,
       ZegoBeautyPluginEffectsType.backgroundPortraitSegmentation.toString():
@@ -533,7 +491,7 @@ class ZegoUIKitBeautyTranslation {
       ZegoBeautyPluginEffectsType.beautyMakeupBlusherMilkyOrange.toString():
           BeautyResource.makeupBlusherMilkyOrange,
       ZegoBeautyPluginEffectsType.beautyMakeupBlusherPeach.toString():
-          BeautyResource.mkeupBlusherPeach,
+          BeautyResource.makeupBlusherPeach,
       ZegoBeautyPluginEffectsType.beautyMakeupBlusherSlightlyDrunk.toString():
           BeautyResource.makeupBlusherSlightlyDrunk,
       ZegoBeautyPluginEffectsType.beautyMakeupBlusherSweetOrange.toString():
@@ -587,17 +545,17 @@ class ZegoUIKitBeautyTranslation {
       ZegoBeautyPluginEffectsType.beautyMakeupLipstickSweetOrange.toString():
           BeautyResource.makeupLipstickSweetOrange,
       ZegoBeautyPluginEffectsType.beautyStyleMakeupFlawless.toString():
-          BeautyResource.stypelMakeupFlawless,
+          BeautyResource.styleMakeupFlawless,
       ZegoBeautyPluginEffectsType.beautyStyleMakeupInnocentEyes.toString():
-          BeautyResource.stypelMakeupInnocentEyes,
+          BeautyResource.styleMakeupInnocentEyes,
       ZegoBeautyPluginEffectsType.beautyStyleMakeupMilkyEyes.toString():
-          BeautyResource.stypelMakeupMilkyEyes,
+          BeautyResource.styleMakeupMilkyEyes,
       ZegoBeautyPluginEffectsType.beautyStyleMakeupPureSexy.toString():
-          BeautyResource.stypelMakeupPureSexy,
+          BeautyResource.styleMakeupPureSexy,
       ZegoBeautyPluginEffectsType.beautyStyleMakeupCutieCool.toString():
-          BeautyResource.stypelMakeupCutieCool,
+          BeautyResource.styleMakeupCutieCool,
       ZegoBeautyPluginEffectsType.filterDreamyCozily.toString():
-          BeautyResource.fileterDreamyCozily,
+          BeautyResource.filterDreamyCozily,
       ZegoBeautyPluginEffectsType.filterDreamySunset.toString():
           BeautyResource.filterDreamySunset,
       ZegoBeautyPluginEffectsType.filterDreamySweet.toString():
@@ -616,24 +574,6 @@ class ZegoUIKitBeautyTranslation {
           BeautyResource.filterNaturalCreamy,
       ZegoBeautyPluginEffectsType.filterNaturalFresh.toString():
           BeautyResource.filterNaturalFresh,
-      ZegoBeautyPluginEffectsType.stickerAnimal.toString():
-          BeautyResource.stickerAnimal,
-      ZegoBeautyPluginEffectsType.stickerCat.toString():
-          BeautyResource.stickerCat,
-      ZegoBeautyPluginEffectsType.stickerClawMachine.toString():
-          BeautyResource.stickerClawMachine,
-      ZegoBeautyPluginEffectsType.stickerClown.toString():
-          BeautyResource.stickerClown,
-      ZegoBeautyPluginEffectsType.stickerCoolGirl.toString():
-          BeautyResource.stickerCoolGirl,
-      ZegoBeautyPluginEffectsType.stickerDeer.toString():
-          BeautyResource.stickerDeer,
-      ZegoBeautyPluginEffectsType.stickerDive.toString():
-          BeautyResource.stickerDive,
-      ZegoBeautyPluginEffectsType.stickerSailorMoon.toString():
-          BeautyResource.stickerSailorMoon,
-      ZegoBeautyPluginEffectsType.stickerWatermelon.toString():
-          BeautyResource.stickerWatermelon,
     };
   }
 }

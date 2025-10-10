@@ -29,34 +29,4 @@ class ZegoUIKitBeautyPluginPlatform {
 
     return version;
   }
-
-  /// enableCustomVideoProcessing
-  Future<void> enableCustomVideoProcessing() async {
-    try {
-      await methodChannel.invokeMethod('enableCustomVideoProcessing');
-    } on PlatformException catch (e) {
-      ZegoBeautyLoggerService.logError(
-        'Failed to enable custom video processing: $e.',
-        tag: 'beauty',
-        subTag: 'channel',
-      );
-    }
-  }
-
-  /// getResourcesFolder
-  Future<String?> getResourcesFolder() async {
-    String? folder;
-
-    try {
-      folder = await methodChannel.invokeMethod<String>('getResourcesFolder');
-    } on PlatformException catch (e) {
-      ZegoBeautyLoggerService.logError(
-        'Failed to get resources folder: $e.',
-        tag: 'beauty',
-        subTag: 'channel',
-      );
-    }
-
-    return folder;
-  }
 }

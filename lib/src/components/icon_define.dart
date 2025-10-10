@@ -3,8 +3,17 @@ import 'package:flutter/material.dart';
 
 /// BeautyImage
 class BeautyImage {
-  static Image asset(String name) {
-    return Image.asset(name, package: 'zego_uikit_beauty_plugin');
+  static Image asset(
+    String name, {
+    double? width,
+    double? height,
+  }) {
+    return Image.asset(
+      name,
+      package: 'zego_uikit_beauty_plugin',
+      width: width,
+      height: height,
+    );
   }
 }
 
@@ -137,21 +146,6 @@ class StyleIconUrls {
       'assets/icons/beauty/style_makeup/beauty_style_makeup_milky_eyes.png';
   static const String beautyStyleMakeupSexyUrl =
       'assets/icons/beauty/style_makeup/beauty_style_makeup_sexy.png';
-
-  static const String stickerAnimalUrl =
-      'assets/icons/effect/sticker_animal.png';
-  static const String stickerCatUrl = 'assets/icons/effect/sticker_cat.png';
-  static const String stickerClawUrl =
-      'assets/icons/effect/sticker_claw_machine.png';
-  static const String stickerClownUrl = 'assets/icons/effect/sticker_clown.png';
-  static const String stickerCoolgrilUrl =
-      'assets/icons/effect/sticker_cool_gril.png';
-  static const String stickerDeerUrl = 'assets/icons/effect/sticker_deer.png';
-  static const String stickerDiveUrl = 'assets/icons/effect/sticker_dive.png';
-  static const String stickerSailorUrl =
-      'assets/icons/effect/sticker_sailor_moon.png';
-  static const String stickerWatermelonUrl =
-      'assets/icons/effect/sticker_watermelon.png';
 
   static const String filterDreamyCozilyUrl =
       'assets/icons/filter/dreamy/filter_dreamy_cozily.png';

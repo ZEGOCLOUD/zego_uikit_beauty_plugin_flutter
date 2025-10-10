@@ -1,5 +1,6 @@
 // Dart imports:
 import 'dart:async';
+import 'dart:io';
 import 'dart:math';
 
 // Flutter imports:
@@ -14,10 +15,8 @@ import 'package:zego_plugin_adapter/zego_plugin_adapter.dart';
 import 'package:zego_uikit_beauty_plugin/src/define.dart';
 import 'package:zego_uikit_beauty_plugin/src/internal/effect_cache.dart';
 import 'package:zego_uikit_beauty_plugin/src/internal/effect_setting.dart';
-import 'package:zego_uikit_beauty_plugin/src/internal/license.dart';
 import 'package:zego_uikit_beauty_plugin/src/internal/ui_display.dart';
 import 'package:zego_uikit_beauty_plugin/src/log/logger_service.dart';
-import 'package:zego_uikit_beauty_plugin/src/method_channel.dart';
 import 'package:zego_uikit_beauty_plugin/src/models/model.dart';
 
 class ZegoUIKitBeautyCore {
@@ -30,11 +29,9 @@ class ZegoUIKitBeautyCore {
 
   ValueNotifier<bool> isSelectStyleMakeup = ValueNotifier(false);
   ValueNotifier<bool> isSelectMakeup = ValueNotifier(false);
-  ValueNotifier<bool> isSelectSticker = ValueNotifier(false);
 
   ZegoBeautyItemModel? lastStyleMakeupModel;
   ZegoBeautyItemModel? lastFilterModel;
-  ZegoBeautyItemModel? lastStickerModel;
   ZegoBeautyItemModel? lastBackgroundModel;
 
   ZegoUIKitBeautyTranslation beautyTranslation =
@@ -50,37 +47,12 @@ class ZegoUIKitBeautyCore {
   /// init
   Future<void> init({
     required int appID,
-    String appSign = '',
-    String licence = '',
+    required String appSign,
   }) async {
     this.appID = appID;
     this.appSign = appSign;
 
-    if (licence.isNotEmpty) {
-      ZegoBeautyLoggerService.logInfo(
-        'init with license',
-        tag: 'beauty',
-        subTag: 'init',
-      );
-
-      initEffects(licence);
-    } else {
-      ZegoBeautyLoggerService.logInfo(
-        'init with app sign, getting license...',
-        tag: 'beauty',
-        subTag: 'init',
-      );
-
-      getLicense().then((httpLicense) {
-        ZegoBeautyLoggerService.logInfo(
-          'get license, has license:${httpLicense.isNotEmpty}',
-          tag: 'beauty',
-          subTag: 'init',
-        );
-
-        initEffects(httpLicense);
-      });
-    }
+    initEffects(appID, appSign);
   }
 
   /// initEventHandler
@@ -97,8 +69,16 @@ class ZegoUIKitBeautyCore {
 
   /// onEffectsError
   Future<void> onEffectsError(int errorCode, String desc) async {
+    ZegoBeautyLoggerService.logInfo(
+      'errorCode: $errorCode, '
+      'desc:$desc, ',
+      tag: 'beauty',
+      subTag: 'onEffectsError',
+    );
+
     if (errorCode == 5000002) {
       //license is expired
+      await init(appID: appID, appSign: appSign);
     }
 
     errorStreamCtrl.add(
@@ -115,18 +95,12 @@ class ZegoUIKitBeautyCore {
     double score,
     Point point,
     Size size,
-  ) async {}
-
-  /// getLicense
-  Future<String> getLicense() async {
-    return ZegoEffectsPlugin.instance.getAuthInfo(appSign).then((authInfo) {
-      ZegoBeautyLoggerService.logInfo(
-        'appSign:$appSign, authInfo:$authInfo',
-        tag: 'beauty',
-        subTag: 'getLicense',
-      );
-      return ZegoBeautyLicense.getEffectsLicense(appID, authInfo);
-    });
+  ) async {
+    // ZegoBeautyLoggerService.logInfo(
+    //   'score: $score, point: $point, size: $size',
+    //   tag: 'beauty',
+    //   subTag: 'onEffectsFaceDetected',
+    // );
   }
 
   Future<void> setBeautyParams(List<ZegoBeautyParamConfig> paramConfigList,
@@ -166,13 +140,10 @@ class ZegoUIKitBeautyCore {
     List<ZegoBeautyItemBaseModel> filterGrayItemModels = [];
     List<ZegoBeautyItemBaseModel> filterDreamItemModels = [];
 
-    List<ZegoBeautyItemBaseModel> stickerItemModels = [];
-
     List<ZegoBeautyItemBaseModel> backgroundItemModels = [];
 
     List<ZegoTwoLevelBaseTabModel> beautyTabModels = [];
     List<ZegoTwoLevelBaseTabModel> filterTabModels = [];
-    List<ZegoTwoLevelBaseTabModel> stickerTabModels = [];
     List<ZegoTwoLevelBaseTabModel> backgroundTabModels = [];
     List<ZegoBeautyMakeUpModel> makeupBeautyItemModels = [];
 
@@ -322,19 +293,6 @@ class ZegoUIKitBeautyCore {
           lastFilterModel = filterModel;
         }
         filterDreamItemModels.add(filterModel);
-      } else if (ZegoUIKitBeautyTranslation.stickersEffectsTypes()
-          .contains(type)) {
-        ZegoBeautyItemModel stickModel = ZegoBeautyItemModel(
-          title,
-          ValueNotifier(isSelect),
-          type,
-          ValueNotifier(value == -9999 ? 50 : value),
-        );
-        if (isSelect) {
-          isSelectSticker.value = true;
-          lastStickerModel = stickModel;
-        }
-        stickerItemModels.add(stickModel);
       } else if (ZegoUIKitBeautyTranslation.backgroundEffectsTypes()
           .contains(type)) {
         ZegoBeautyItemModel backgroundModel = ZegoBeautyItemModel(
@@ -643,27 +601,6 @@ class ZegoUIKitBeautyCore {
       filterTabModels.add(model);
     }
 
-    if (stickerItemModels.isNotEmpty) {
-      stickerItemModels.insert(
-        0,
-        ZegoBeautyItemCleanModel(
-          beautyTranslation.beautyMap[
-                  ZegoUIKitBeautyResetType.originalDrawRect.toString()] ??
-              '',
-          ZegoUIKitBeautyResetType.originalDrawRect,
-          ZegoUIKitResetEffectType.sticker,
-        ),
-      );
-      ZegoStickerTabModel model = ZegoStickerTabModel(
-        beautyTranslation.beautyMap[ZegoUIKitStickerTabType.twoD.toString()] ??
-            '',
-        ZegoUIKitStickerTabType.twoD,
-        stickerItemModels,
-        ValueNotifier(true),
-      );
-      stickerTabModels.add(model);
-    }
-
     if (backgroundItemModels.isNotEmpty) {
       backgroundItemModels.insert(
         0,
@@ -707,18 +644,6 @@ class ZegoUIKitBeautyCore {
             '',
         ZegoUIKitBeautyMainTabType.filter,
         filterTabModels,
-        ValueNotifier(false),
-      );
-      oneLevelsModels.add(oneLevelModel);
-    }
-
-    if (stickerTabModels.isNotEmpty) {
-      ZegoBeautyOneLevelModel oneLevelModel = ZegoBeautyOneLevelModel(
-        beautyTranslation
-                .beautyMap[ZegoUIKitBeautyMainTabType.sticker.toString()] ??
-            '',
-        ZegoUIKitBeautyMainTabType.sticker,
-        stickerTabModels,
         ValueNotifier(false),
       );
       oneLevelsModels.add(oneLevelModel);
@@ -782,8 +707,8 @@ class ZegoUIKitBeautyCore {
         type == ZegoBeautyPluginEffectsType.beautyMakeupLipstickRustRed ||
         type == ZegoBeautyPluginEffectsType.beautyMakeupLipstickCoral ||
         type == ZegoBeautyPluginEffectsType.beautyMakeupLipstickRedVelvet) {
-      ZegoEffectsPlugin.instance.setLipstickPath(
-        '$resourceFolder${beautyTranslation.beautyResourceMap[type.toString()]}',
+      ZegoEffectsPlugin.instance.setLipstick(
+        beautyTranslation.beautyResourceMap[type.toString()] ?? '',
       );
       ZegoEffectsLipstickParam param = ZegoEffectsLipstickParam();
       param.intensity = value;
@@ -794,8 +719,8 @@ class ZegoUIKitBeautyCore {
         type == ZegoBeautyPluginEffectsType.beautyMakeupBlusherMilkyOrange ||
         type == ZegoBeautyPluginEffectsType.beautyMakeupBlusherApricotPink ||
         type == ZegoBeautyPluginEffectsType.beautyMakeupBlusherSweetOrange) {
-      ZegoEffectsPlugin.instance.setBlusherPath(
-        '$resourceFolder${beautyTranslation.beautyResourceMap[type.toString()]}',
+      ZegoEffectsPlugin.instance.setBlusher(
+        beautyTranslation.beautyResourceMap[type.toString()] ?? '',
       );
       ZegoEffectsBlusherParam param = ZegoEffectsBlusherParam();
       param.intensity = value;
@@ -806,8 +731,8 @@ class ZegoUIKitBeautyCore {
         type == ZegoBeautyPluginEffectsType.beautyMakeupEyelashesCurl ||
         type == ZegoBeautyPluginEffectsType.beautyMakeupEyelashesEverlong ||
         type == ZegoBeautyPluginEffectsType.beautyMakeupEyelashesThick) {
-      ZegoEffectsPlugin.instance.setEyelashesPath(
-        '$resourceFolder${beautyTranslation.beautyResourceMap[type.toString()]}',
+      ZegoEffectsPlugin.instance.setEyelashes(
+        beautyTranslation.beautyResourceMap[type.toString()] ?? '',
       );
       ZegoEffectsEyelashesParam param = ZegoEffectsEyelashesParam();
       param.intensity = value;
@@ -818,8 +743,8 @@ class ZegoUIKitBeautyCore {
         type == ZegoBeautyPluginEffectsType.beautyMakeupEyelinerNaughty ||
         type == ZegoBeautyPluginEffectsType.beautyMakeupEyelinerInnocent ||
         type == ZegoBeautyPluginEffectsType.beautyMakeupEyelinerDignified) {
-      ZegoEffectsPlugin.instance.setEyelinerPath(
-        '$resourceFolder${beautyTranslation.beautyResourceMap[type.toString()]}',
+      ZegoEffectsPlugin.instance.setEyeliner(
+        beautyTranslation.beautyResourceMap[type.toString()] ?? '',
       );
       ZegoEffectsEyelinerParam param = ZegoEffectsEyelinerParam();
       param.intensity = value;
@@ -830,8 +755,8 @@ class ZegoUIKitBeautyCore {
         type == ZegoBeautyPluginEffectsType.beautyMakeupEyeshadowTeaBrown ||
         type == ZegoBeautyPluginEffectsType.beautyMakeupEyeshadowBrightOrange ||
         type == ZegoBeautyPluginEffectsType.beautyMakeupEyeshadowMochaBrown) {
-      ZegoEffectsPlugin.instance.setEyeshadowPath(
-        '$resourceFolder${beautyTranslation.beautyResourceMap[type.toString()]}',
+      ZegoEffectsPlugin.instance.setEyeshadow(
+        beautyTranslation.beautyResourceMap[type.toString()] ?? '',
       );
       ZegoEffectsEyeshadowParam param = ZegoEffectsEyeshadowParam();
       param.intensity = value;
@@ -849,8 +774,8 @@ class ZegoUIKitBeautyCore {
         type ==
             ZegoBeautyPluginEffectsType
                 .beautyMakeupColoredContactsChocolateBrown) {
-      ZegoEffectsPlugin.instance.setColoredcontactsPath(
-        '$resourceFolder${beautyTranslation.beautyResourceMap[type.toString()]}',
+      ZegoEffectsPlugin.instance.setColoredcontacts(
+        beautyTranslation.beautyResourceMap[type.toString()] ?? '',
       );
       ZegoEffectsColoredcontactsParam param = ZegoEffectsColoredcontactsParam();
       param.intensity = value;
@@ -930,45 +855,10 @@ class ZegoUIKitBeautyCore {
         type == ZegoBeautyPluginEffectsType.filterDreamySunset ||
         type == ZegoBeautyPluginEffectsType.filterDreamyCozily ||
         type == ZegoBeautyPluginEffectsType.filterDreamySweet) {
-      ZegoEffectsPlugin.instance.setFilterPath(
-        '$resourceFolder${beautyTranslation.beautyResourceMap[type.toString()]}',
+      ZegoEffectsPlugin.instance.setFilter(
+        beautyTranslation.beautyResourceMap[type.toString()] ?? '',
       );
       setEffectValue(type, value);
-    }
-  }
-
-  /// updateStickerSelectState
-  void updateStickerSelectState(ZegoBeautyItemModel model) {
-    if (model.isSelect.value) {
-      return;
-    }
-    isSelectSticker.value = true;
-    lastStickerModel?.isSelect.value = false;
-    if (lastStickerModel != null) {
-      ZegoBeautyEffectRecord.instance
-          .setEffectRecordSelectState(lastStickerModel!.type, false);
-    }
-    ZegoBeautyEffectRecord.instance
-        .setEffectRecordSelectState(model.type, true);
-    model.isSelect.value = true;
-    lastStickerModel = model;
-    setStickerEffects(model.type);
-  }
-
-  void setStickerEffects(ZegoBeautyPluginEffectsType type) {
-    if (type == ZegoBeautyPluginEffectsType.stickerAnimal ||
-        type == ZegoBeautyPluginEffectsType.stickerDive ||
-        type == ZegoBeautyPluginEffectsType.stickerCat ||
-        type == ZegoBeautyPluginEffectsType.stickerWatermelon ||
-        type == ZegoBeautyPluginEffectsType.stickerDeer ||
-        type == ZegoBeautyPluginEffectsType.stickerCoolGirl ||
-        type == ZegoBeautyPluginEffectsType.stickerClown ||
-        type == ZegoBeautyPluginEffectsType.stickerClawMachine ||
-        type == ZegoBeautyPluginEffectsType.stickerSailorMoon) {
-      isSelectSticker.value = true;
-      ZegoEffectsPlugin.instance.setPendantPath(
-        '$resourceFolder${beautyTranslation.beautyResourceMap[type.toString()]}',
-      );
     }
   }
 
@@ -1072,9 +962,8 @@ class ZegoUIKitBeautyCore {
         type == ZegoBeautyPluginEffectsType.beautyStyleMakeupCutieCool ||
         type == ZegoBeautyPluginEffectsType.beautyStyleMakeupPureSexy ||
         type == ZegoBeautyPluginEffectsType.beautyStyleMakeupFlawless) {
-      final styleMakeupPath =
-          '$resourceFolder${beautyTranslation.beautyResourceMap[type.toString()] ?? ''}';
-      ZegoEffectsPlugin.instance.setMakeupPath(styleMakeupPath);
+      ZegoEffectsPlugin.instance.setMakeup(
+          beautyTranslation.beautyResourceMap[type.toString()] ?? '');
     }
   }
 
@@ -1155,9 +1044,6 @@ class ZegoUIKitBeautyCore {
       case ZegoUIKitResetEffectType.filterGray:
       case ZegoUIKitResetEffectType.filterDreamy:
         resetFilter(model.resetType);
-        break;
-      case ZegoUIKitResetEffectType.sticker:
-        resetSticker(model.resetType);
         break;
       case ZegoUIKitResetEffectType.background2D:
         resetBackground(model.resetType);
@@ -1259,31 +1145,12 @@ class ZegoUIKitBeautyCore {
   void resetFilter(ZegoUIKitResetEffectType type) {
     lastFilterModel?.isSelect.value = false;
     lastFilterModel?.effectValue.value = 50;
-    ZegoEffectsPlugin.instance.setFilterPath('');
+    ZegoEffectsPlugin.instance.setFilter('');
     for (ZegoBeautyOneLevelModel element in mainModel!.models) {
       for (ZegoTwoLevelBaseTabModel element in element.models) {
         if (element is ZegoFilterTabModel) {
           for (ZegoBeautyItemBaseModel model in element.models) {
             if (model is ZegoBeautyItemModel) {
-              ZegoBeautyEffectRecord.instance.delectEffectRecord(model.type);
-            }
-          }
-        }
-      }
-    }
-  }
-
-  /// resetSticker
-  void resetSticker(ZegoUIKitResetEffectType type) {
-    isSelectSticker.value = false;
-    lastStickerModel?.isSelect.value = false;
-    ZegoEffectsPlugin.instance.setPendantPath('');
-    for (ZegoBeautyOneLevelModel element in mainModel!.models) {
-      for (ZegoTwoLevelBaseTabModel element in element.models) {
-        if (element is ZegoStickerTabModel) {
-          for (ZegoBeautyItemBaseModel model in element.models) {
-            if (model is ZegoBeautyItemModel) {
-              model.isSelect.value = false;
               ZegoBeautyEffectRecord.instance.delectEffectRecord(model.type);
             }
           }
@@ -1314,56 +1181,41 @@ class ZegoUIKitBeautyCore {
     }
   }
 
-  /// setResources
-  Future<void> setResources() async {
-    final folderPath =
-        await ZegoUIKitBeautyPluginPlatform.instance.getResourcesFolder() ?? '';
-    resourceFolder = folderPath;
-    debugPrint(folderPath);
-    final commonPath = '$folderPath/CommonResources.bundle';
-    final rosyPath = '$commonPath/RosyResources';
-    final faceWhiteningPath = '$commonPath/FaceWhiteningResources';
-    final teethPath = '$commonPath/TeethWhiteningResources';
-    final faceDetectionPath = '$folderPath/FaceDetection.model';
-    final stickerPath = '$folderPath/StickerBaseResources.bundle';
-    final segmentationPath = '$folderPath/BackgroundSegmentation.model';
-
-    final param = ZegoEffectsResourcesPathParam();
-    param.common = commonPath;
-    param.rosy = rosyPath;
-    param.faceWhitening = faceWhiteningPath;
-    param.teeth = teethPath;
-    param.faceDetection = faceDetectionPath;
-    param.pendant = stickerPath;
-    param.segmentation = segmentationPath;
-    await ZegoEffectsPlugin.instance.setResourcesPath(param);
-  }
-
   /// initEffects
-  void initEffects(String license) async {
+  Future<void> initEffects(int appID, String appSign) async {
     ZegoBeautyLoggerService.logInfo(
       'ready set resources',
       tag: 'beauty',
       subTag: 'initEffects',
     );
-    await setResources();
+    await ZegoEffectsPlugin.instance.setResources();
 
     ZegoBeautyLoggerService.logInfo(
-      'ready create, has license:${license.isNotEmpty}',
+      'ready create with appID: $appID',
       tag: 'beauty',
       subTag: 'initEffects',
     );
-    await ZegoEffectsPlugin.instance.create(license).then((result) {
-      ZegoBeautyLoggerService.logInfo(
-        'create done,  result: $result',
-        tag: 'beauty',
-        subTag: 'initEffects',
-      );
-    });
 
-    ZegoEffectsPlugin.instance.initEnv(const Size(720, 1280));
-    // initEventHandler();
-    ZegoUIKitBeautyPluginPlatform.instance.enableCustomVideoProcessing();
+    // callback of effects sdk.
+    await ZegoEffectsPlugin.registerEventCallback(
+      onEffectsError: onEffectsError,
+      onEffectsFaceDetected: onEffectsFaceDetected,
+    );
+
+    final createRetCode =
+        await ZegoEffectsPlugin.instance.create(appID, appSign);
+    ZegoBeautyLoggerService.logInfo(
+      'create done, result: $createRetCode',
+      tag: 'beauty',
+      subTag: 'initEffects',
+    );
+
+    if (0 != createRetCode) {
+      onEffectsError(createRetCode, '');
+    } else {
+      await ZegoEffectsPlugin.instance.enableImageProcessing(true);
+      await ZegoEffectsPlugin.instance.enableFaceDetection(true);
+    }
 
     await setDefaultBeautyEffects();
   }
@@ -1380,7 +1232,6 @@ class ZegoUIKitBeautyCore {
       updateBasicAndAdvancedSelectStateWithType(effectType);
       setMakeupEffects(effectType, value);
       setFilterEffects(effectType, value);
-      setStickerEffects(effectType);
       setStyleMakeupEffects(effectType);
       setBackgroundEffects(effectType, value);
       setEffectValue(effectType, value);
@@ -1393,8 +1244,14 @@ class ZegoUIKitBeautyCore {
   }
 
   /// showBeautyUI
-  void showBeautyUI(BuildContext context) {
-    uiDisplay.showBeautyUI(context);
+  void showBeautyUI(
+    BuildContext context, {
+    required Size designSize,
+  }) {
+    uiDisplay.showBeautyUI(
+      context,
+      designSize: designSize,
+    );
   }
 
   /// updateSliderModel
@@ -1417,8 +1274,6 @@ class ZegoUIKitBeautyCore {
           break;
         }
       }
-    } else if (model is ZegoStickerTabModel) {
-      sliderModel.value = null;
     } else if (model is ZegoBackgroundTabModel) {
       for (var itemModel in model.models) {
         if (itemModel is ZegoBeautyItemModel &&
@@ -1438,8 +1293,10 @@ class ZegoUIKitBeautyCore {
   }
 
   /// updateMakeupSliderModel
-  void updateMakeupSliderModel(ZegoBeautyMakeUpModel model,
-      ValueNotifier<ZegoBeautyItemModel?> sliderModel) {
+  void updateMakeupSliderModel(
+    ZegoBeautyMakeUpModel model,
+    ValueNotifier<ZegoBeautyItemModel?> sliderModel,
+  ) {
     sliderModel.value = null;
     for (var itemModel in model.models) {
       if (itemModel is ZegoBeautyItemModel && itemModel.isSelect.value) {
@@ -1455,11 +1312,9 @@ class ZegoUIKitBeautyCore {
     uiDisplay.clear();
     isSelectStyleMakeup.value = false;
     isSelectMakeup.value = false;
-    isSelectSticker.value = false;
 
     lastStyleMakeupModel = null;
     lastFilterModel = null;
-    lastStickerModel = null;
     lastBackgroundModel = null;
   }
 }

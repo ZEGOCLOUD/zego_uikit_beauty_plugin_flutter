@@ -4,18 +4,19 @@ import 'package:flutter/material.dart';
 // Project imports:
 import 'package:zego_uikit_beauty_plugin/src/models/model.dart';
 import 'package:zego_uikit_beauty_plugin/zego_uikit_beauty_plugin.dart';
+import 'package:zego_uikit_beauty_plugin/src/components/screen_util/screen_util.dart';
 
 /// MainTabButtonClick
 typedef MainTabButtonClick = void Function(ZegoBeautyOneLevelModel model);
 
 /// ZegoUIKitBeautyMainTab
 class ZegoUIKitBeautyMainTab extends StatefulWidget {
-  const ZegoUIKitBeautyMainTab(
-      {Key? key,
-      required this.mainTabList,
-      required this.defaultSelectNoti,
-      this.tabClickCallBack})
-      : super(key: key);
+  const ZegoUIKitBeautyMainTab({
+    Key? key,
+    required this.mainTabList,
+    required this.defaultSelectNoti,
+    this.tabClickCallBack,
+  }) : super(key: key);
 
   final List<ZegoBeautyOneLevelModel> mainTabList;
   final ValueNotifier<ZegoBeautyOneLevelModel> defaultSelectNoti;
@@ -36,14 +37,11 @@ class _ZegoUIKitBeautyMainTabState extends State<ZegoUIKitBeautyMainTab> {
     return Container(
       color: ZegoUIKitBeautyPlugin
           .instance.core.effectsConfig.uiConfig.backgroundColor,
-      height: 47.5,
+      height: 47.5.zH,
       child: Column(
         children: [
           tabSizeBox(),
-          Container(
-            height: 0.5,
-            color: const Color(0xffC4C4C4),
-          ),
+          Container(height: 0.5.zH, color: const Color(0xffC4C4C4)),
         ],
       ),
     );
@@ -52,21 +50,24 @@ class _ZegoUIKitBeautyMainTabState extends State<ZegoUIKitBeautyMainTab> {
   /// tabSizeBox
   Widget tabSizeBox() {
     return ValueListenableBuilder<ZegoBeautyOneLevelModel>(
-        valueListenable: widget.defaultSelectNoti,
-        builder: (context, selectModel, _) {
-          return SizedBox(
-            height: 47,
-            child: Row(
-              children: tabButtons(),
-            ),
-          );
-        });
+      valueListenable: widget.defaultSelectNoti,
+      builder: (context, selectModel, _) {
+        return SizedBox(
+          height: 47.zH,
+          child: Row(
+            children: tabButtons(),
+          ),
+        );
+      },
+    );
   }
 
   /// tabButtons
   List<Widget> tabButtons() {
-    var buttonSize =
-        Size(MediaQuery.of(context).size.width / widget.mainTabList.length, 47);
+    var buttonSize = Size(
+      MediaQuery.of(context).size.width / widget.mainTabList.length,
+      47.zH,
+    );
     List<Widget> tabList = [];
     for (var model in widget.mainTabList) {
       tabList.add(TabButton(
@@ -89,13 +90,13 @@ class _ZegoUIKitBeautyMainTabState extends State<ZegoUIKitBeautyMainTab> {
 
 /// TabButton
 class TabButton extends StatefulWidget {
-  const TabButton(
-      {Key? key,
-      required this.model,
-      required this.buttonSize,
-      required this.isSelect,
-      this.tabClickCallBack})
-      : super(key: key);
+  const TabButton({
+    Key? key,
+    required this.model,
+    required this.buttonSize,
+    required this.isSelect,
+    this.tabClickCallBack,
+  }) : super(key: key);
 
   final ZegoBeautyOneLevelModel model;
   final Size buttonSize;
@@ -124,71 +125,62 @@ class _TabButtonState extends State<TabButton> {
   /// tabContainer
   Widget tabContainer() {
     return ValueListenableBuilder<bool>(
-        valueListenable: widget.isSelect,
-        builder: (context, isSelect, _) {
-          return SizedBox(
-            width: widget.buttonSize.width,
-            height: widget.buttonSize.height,
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    SizedBox(
-                      width: (widget.buttonSize.width - 15 > 100)
-                          ? 100
-                          : widget.buttonSize.width - 15,
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          SizedBox(
-                            height: 16,
-                            child: Center(
-                              child: Text(
-                                widget.model.title,
-                                style: (isSelect
-                                    ? ZegoUIKitBeautyPlugin
-                                        .instance
-                                        .core
-                                        .effectsConfig
-                                        .uiConfig
-                                        .selectHeaderTitleTextStyle
-                                    : ZegoUIKitBeautyPlugin
-                                        .instance
-                                        .core
-                                        .effectsConfig
-                                        .uiConfig
-                                        .normalHeaderTitleTextStyle),
-                              ),
+      valueListenable: widget.isSelect,
+      builder: (context, isSelect, _) {
+        return SizedBox(
+          width: widget.buttonSize.width,
+          height: widget.buttonSize.height,
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  SizedBox(width: 15.zW),
+                  SizedBox(
+                    width: (widget.buttonSize.width - 15.zW > 100.zW)
+                        ? 100.zW
+                        : widget.buttonSize.width - 15.zW,
+                    child: Column(
+                      children: [
+                        SizedBox(height: 15.zH),
+                        SizedBox(
+                          height: 16.zH,
+                          child: Center(
+                            child: Text(
+                              widget.model.title,
+                              style: (isSelect
+                                  ? ZegoUIKitBeautyPlugin
+                                      .instance
+                                      .core
+                                      .effectsConfig
+                                      .uiConfig
+                                      .selectHeaderTitleTextStyle
+                                  : ZegoUIKitBeautyPlugin
+                                      .instance
+                                      .core
+                                      .effectsConfig
+                                      .uiConfig
+                                      .normalHeaderTitleTextStyle),
                             ),
                           ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          if (isSelect) selectLine(),
-                        ],
-                      ),
+                        ),
+                        SizedBox(height: 15.zH),
+                        if (isSelect) selectLine(),
+                      ],
                     ),
-                  ],
-                ),
-              ],
-            ),
-          );
-        });
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   /// selectLine
   Widget selectLine() {
     return Center(
-      child: Container(
-        width: 14,
-        height: 1,
-        color: Colors.white,
-      ),
+      child: Container(width: 14.zW, height: 1.zH, color: Colors.white),
     );
   }
 }

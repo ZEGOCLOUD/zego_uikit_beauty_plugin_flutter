@@ -6,6 +6,7 @@ import 'package:zego_plugin_adapter/zego_plugin_adapter.dart';
 
 // Project imports:
 import 'package:zego_uikit_beauty_plugin/src/components/collection_view.dart';
+import 'package:zego_uikit_beauty_plugin/src/components/screen_util/screen_util.dart';
 import 'package:zego_uikit_beauty_plugin/src/components/effect_slider.dart';
 import 'package:zego_uikit_beauty_plugin/src/components/main_tab.dart';
 import 'package:zego_uikit_beauty_plugin/src/components/makeup_view.dart';
@@ -56,122 +57,128 @@ class _ZegoUIKitBeautyViewState extends State<ZegoUIKitBeautyView> {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<ZegoBeautyItemModel?>(
-        valueListenable: widget.showSlider,
-        builder: (context, sliderModel, _) {
-          return Container(
-            color: Colors.transparent,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                if (sliderModel != null) ...[
-                  slider(sliderModel, 30),
-                  const SizedBox(height: 20),
-                ] else ...[
-                  const SizedBox(height: 50),
-                ],
-                Container(
-                  color: ZegoUIKitBeautyPlugin
-                      .instance.core.effectsConfig.uiConfig.backgroundColor,
-                  child: Column(
-                    children: [
-                      createOneLevelTab(),
-                      createTwoLevelTab(),
-                      createItemView(),
-                      Container(
-                        color: ZegoUIKitBeautyPlugin.instance.core.effectsConfig
-                            .uiConfig.backgroundColor,
-                        height: 20,
-                      ),
-                    ],
-                  ),
-                ),
+      valueListenable: widget.showSlider,
+      builder: (context, sliderModel, _) {
+        return Container(
+          color: Colors.transparent,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              if (sliderModel != null) ...[
+                slider(sliderModel, 30.zH),
+                SizedBox(height: 20.zH),
+              ] else ...[
+                SizedBox(height: 50.zH),
               ],
-            ),
-          );
-        });
+              Container(
+                color: ZegoUIKitBeautyPlugin
+                    .instance.core.effectsConfig.uiConfig.backgroundColor,
+                child: Column(
+                  children: [
+                    createOneLevelTab(),
+                    createTwoLevelTab(),
+                    createItemView(),
+                    Container(
+                      color: ZegoUIKitBeautyPlugin
+                          .instance.core.effectsConfig.uiConfig.backgroundColor,
+                      height: 20.zH,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   /// createOneLevelTab
   Widget createOneLevelTab() {
     return ValueListenableBuilder<ZegoBeautyOneLevelModel>(
-        valueListenable: widget.mainModel.selectType,
-        builder: (context, selectType, _) {
-          return ZegoUIKitBeautyMainTab(
-            mainTabList: widget.mainModel.models,
-            defaultSelectNoti: widget.mainModel.selectType,
-            tabClickCallBack: (model) {
-              widget.mainModel.selectType.value = model;
-              widget.twoLevelSelect.value = model.models.first;
-              ZegoUIKitBeautyPlugin.instance.core
-                  .updateSliderModel(model.models.first, widget.showSlider);
-            },
-          );
-        });
+      valueListenable: widget.mainModel.selectType,
+      builder: (context, selectType, _) {
+        return ZegoUIKitBeautyMainTab(
+          mainTabList: widget.mainModel.models,
+          defaultSelectNoti: widget.mainModel.selectType,
+          tabClickCallBack: (model) {
+            widget.mainModel.selectType.value = model;
+            widget.twoLevelSelect.value = model.models.first;
+            ZegoUIKitBeautyPlugin.instance.core
+                .updateSliderModel(model.models.first, widget.showSlider);
+          },
+        );
+      },
+    );
   }
 
   /// createTwoLevelTab
   Widget createTwoLevelTab() {
     return ValueListenableBuilder<ZegoBeautyOneLevelModel>(
-        valueListenable: widget.mainModel.selectType,
-        builder: (context, selectModel, _) {
-          return ZegoUIKitBeautySecondLevelTab(
-            tabList: selectModel.models,
-            defaultSelectNoti: widget.twoLevelSelect,
-            tabButtonClick: (model) {
-              widget.twoLevelSelect.value = model;
-              ZegoUIKitBeautyPlugin.instance.core
-                  .updateSliderModel(model, widget.showSlider);
-            },
-          );
-        });
+      valueListenable: widget.mainModel.selectType,
+      builder: (context, selectModel, _) {
+        return ZegoUIKitBeautySecondLevelTab(
+          tabList: selectModel.models,
+          defaultSelectNoti: widget.twoLevelSelect,
+          tabButtonClick: (model) {
+            widget.twoLevelSelect.value = model;
+            ZegoUIKitBeautyPlugin.instance.core
+                .updateSliderModel(model, widget.showSlider);
+          },
+        );
+      },
+    );
   }
 
   /// createItemView
   Widget createItemView() {
     return ValueListenableBuilder<ZegoTwoLevelBaseTabModel?>(
-        valueListenable: widget.twoLevelSelect,
-        builder: (context, selectModel, _) {
-          if (selectModel is ZegoBeautyTabModel &&
-              selectModel.type == ZegoUIKitBeautyTabType.beautyMakeup) {
-            ZegoUIKitBeautyMakeupView view = ZegoUIKitBeautyMakeupView(
-              tabModel: selectModel,
-              makeClickCallBack: (model) {
-                ZegoUIKitBeautyPlugin
-                    .instance.core.uiDisplay.showMakeupItem.value = model;
-                ZegoUIKitBeautyPlugin.instance.core
-                    .updateMakeupSliderModel(model, widget.showSlider);
-              },
-              makeupCleanClickCallBack: (model) {
-                // ZegoUIKitBeautyPlugin.instance.core.uiDiaplay.showMakeupItem.value = model;
-              },
-            );
-            return view;
-          } else {
-            ZegoUIKitBeautyCollectionView view = ZegoUIKitBeautyCollectionView(
-              selectItemModelNotifier: ValueNotifier(null),
-              tabModel: selectModel ?? widget.mainModel.models[0].models[0],
-              itemClickCallBack: (model) {
-                itemSelect.value = model;
-                if (selectModel is ZegoStickerTabModel) {
+      valueListenable: widget.twoLevelSelect,
+      builder: (context, selectModel, _) {
+        if (selectModel is ZegoBeautyTabModel &&
+            selectModel.type == ZegoUIKitBeautyTabType.beautyMakeup) {
+          ZegoUIKitBeautyMakeupView view = ZegoUIKitBeautyMakeupView(
+            tabModel: selectModel,
+            makeClickCallBack: (model) {
+              ZegoUIKitBeautyPlugin
+                  .instance.core.uiDisplay.showMakeupItem.value = model;
+              ZegoUIKitBeautyPlugin.instance.core.updateMakeupSliderModel(
+                model,
+                widget.showSlider,
+              );
+            },
+            makeupCleanClickCallBack: (model) {
+              // ZegoUIKitBeautyPlugin.instance.core.uiDiaplay.showMakeupItem.value = model;
+            },
+          );
+          return view;
+        } else {
+          ZegoUIKitBeautyCollectionView view = ZegoUIKitBeautyCollectionView(
+            selectItemModelNotifier: ValueNotifier(null),
+            tabModel: selectModel ?? widget.mainModel.models[0].models[0],
+            itemClickCallBack: (model) {
+              itemSelect.value = model;
+              if (selectModel is ZegoStickerTabModel) {
+                widget.showSlider.value = null;
+              } else {
+                if (model is ZegoBeautyItemModel &&
+                    model.type ==
+                        ZegoBeautyPluginEffectsType
+                            .backgroundPortraitSegmentation) {
                   widget.showSlider.value = null;
                 } else {
-                  if (model is ZegoBeautyItemModel &&
-                      model.type ==
-                          ZegoBeautyPluginEffectsType
-                              .backgroundPortraitSegmentation) {
-                    widget.showSlider.value = null;
-                  } else {
-                    widget.showSlider.value = (model as ZegoBeautyItemModel);
-                  }
+                  widget.showSlider.value = (model as ZegoBeautyItemModel);
                 }
-              },
-              itemResetCallBack: (model) {
-                widget.showSlider.value = null;
-              },
-            );
-            return view;
-          }
-        });
+              }
+            },
+            itemResetCallBack: (model) {
+              widget.showSlider.value = null;
+            },
+          );
+          return view;
+        }
+      },
+    );
   }
 
   /// slider

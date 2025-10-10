@@ -12,7 +12,7 @@ dependencies:
     sdk: flutter
   plugin_platform_interface: ^2.1.8
   
-  zego_effects_plugin: ^1.0.14
+  zego_effects_plugin: ^2.2.5
   zego_plugin_adapter: ^2.13.12
   shared_preferences: ^2.2.2
   path_provider_android: ^2.2.0
@@ -39,7 +39,6 @@ flutter:
   assets:
     - assets/icons/
     - assets/icons/background/
-    - assets/icons/effect/
     - assets/icons/filter/dreamy/
     - assets/icons/filter/gray/
     - assets/icons/filter/nature/

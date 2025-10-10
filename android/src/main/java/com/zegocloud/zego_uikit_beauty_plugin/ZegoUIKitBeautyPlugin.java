@@ -40,21 +40,6 @@ public class ZegoUIKitBeautyPlugin implements FlutterPlugin, MethodCallHandler {
       result.success("Android " + android.os.Build.VERSION.RELEASE);
     }
 
-    else if (call.method.equals("enableCustomVideoProcessing")) {
-      ZegoBeautyPluginVideoProcess.getInstance().enableCustomVideoProcessing();
-      result.success(null);
-    }
-
-    else if (call.method.equals("getResourcesFolder")) {
-
-      String path = mContext.getExternalCacheDir().getPath() + File.separator + "BeautyResources";
-      result.success(path);
-
-      // copy all files from assets.
-      ZegoFileUtil.copyFileFromAssets(mContext, "BeautyResources", path);
-
-      Log.i("TAG", "onMethodCall: " + path);
-    }
 
     else {
       result.notImplemented();

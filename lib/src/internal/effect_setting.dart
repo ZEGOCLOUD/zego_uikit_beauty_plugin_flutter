@@ -80,12 +80,12 @@ class ZegoBeautyEffectValueSetting {
 
   /// resetAllMakeup
   static void resetAllMakeup(ZegoBeautyTabModel tabModel) {
-    ZegoEffectsPlugin.instance.setLipstickPath('');
-    ZegoEffectsPlugin.instance.setBlusherPath('');
-    ZegoEffectsPlugin.instance.setEyelashesPath('');
-    ZegoEffectsPlugin.instance.setEyelinerPath('');
-    ZegoEffectsPlugin.instance.setEyeshadowPath('');
-    ZegoEffectsPlugin.instance.setColoredcontactsPath('');
+    ZegoEffectsPlugin.instance.setLipstick('');
+    ZegoEffectsPlugin.instance.setBlusher('');
+    ZegoEffectsPlugin.instance.setEyelashes('');
+    ZegoEffectsPlugin.instance.setEyeliner('');
+    ZegoEffectsPlugin.instance.setEyeshadow('');
+    ZegoEffectsPlugin.instance.setColoredcontacts('');
 
     for (var makeupElement in tabModel.makeupModels) {
       for (var element in makeupElement.models) {
@@ -118,22 +118,22 @@ class ZegoBeautyEffectValueSetting {
       ZegoBeautyTabModel tabModel, ZegoUIKitBeautyMakeupType type) {
     switch (type) {
       case ZegoUIKitBeautyMakeupType.lipstick:
-        ZegoEffectsPlugin.instance.setLipstickPath('');
+        ZegoEffectsPlugin.instance.setLipstick('');
         break;
       case ZegoUIKitBeautyMakeupType.blusher:
-        ZegoEffectsPlugin.instance.setBlusherPath('');
+        ZegoEffectsPlugin.instance.setBlusher('');
         break;
       case ZegoUIKitBeautyMakeupType.eyelashes:
-        ZegoEffectsPlugin.instance.setEyelashesPath('');
+        ZegoEffectsPlugin.instance.setEyelashes('');
         break;
       case ZegoUIKitBeautyMakeupType.eyeliner:
-        ZegoEffectsPlugin.instance.setEyelinerPath('');
+        ZegoEffectsPlugin.instance.setEyeliner('');
         break;
       case ZegoUIKitBeautyMakeupType.eyeshadow:
-        ZegoEffectsPlugin.instance.setEyeshadowPath('');
+        ZegoEffectsPlugin.instance.setEyeshadow('');
         break;
       case ZegoUIKitBeautyMakeupType.color:
-        ZegoEffectsPlugin.instance.setColoredcontactsPath('');
+        ZegoEffectsPlugin.instance.setColoredcontacts('');
         break;
       default:
     }
@@ -369,33 +369,6 @@ class ZegoBeautyEffectValueSetting {
         ZegoEffectsFilterParam param = ZegoEffectsFilterParam();
         param.intensity = effectValue;
         ZegoEffectsPlugin.instance.setFilterParam(param);
-        break;
-      case ZegoBeautyPluginEffectsType.stickerAnimal:
-        // TODO: Handle this case.
-        break;
-      case ZegoBeautyPluginEffectsType.stickerDive:
-        // TODO: Handle this case.
-        break;
-      case ZegoBeautyPluginEffectsType.stickerCat:
-        // TODO: Handle this case.
-        break;
-      case ZegoBeautyPluginEffectsType.stickerWatermelon:
-        // TODO: Handle this case.
-        break;
-      case ZegoBeautyPluginEffectsType.stickerDeer:
-        // TODO: Handle this case.
-        break;
-      case ZegoBeautyPluginEffectsType.stickerCoolGirl:
-        // TODO: Handle this case.
-        break;
-      case ZegoBeautyPluginEffectsType.stickerClown:
-        // TODO: Handle this case.
-        break;
-      case ZegoBeautyPluginEffectsType.stickerClawMachine:
-        // TODO: Handle this case.
-        break;
-      case ZegoBeautyPluginEffectsType.stickerSailorMoon:
-        // TODO: Handle this case.
         break;
     }
   }

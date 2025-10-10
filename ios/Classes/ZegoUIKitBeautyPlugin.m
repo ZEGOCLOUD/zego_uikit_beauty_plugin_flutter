@@ -1,5 +1,4 @@
 #import "ZegoUIKitBeautyPlugin.h"
-#import "ZegoBeautyPluginVideoProcess.h"
 
 @implementation ZegoUIKitBeautyPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
@@ -17,16 +16,6 @@
     result([@"iOS " stringByAppendingString:[[UIDevice currentDevice] systemVersion]]);
   } 
 
-  else if ([@"enableCustomVideoProcessing" isEqualToString:call.method]) {
-  
-    [ZegoBeautyPluginVideoProcess.sharedInstance enableCustomVideoProcessing];
-    result(nil);
-  }
-
-  else if ([@"getResourcesFolder" isEqualToString:call.method]) {
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"BeautyResources" ofType:nil];
-    result(path);
-  }
   
   else {
     result(FlutterMethodNotImplemented);

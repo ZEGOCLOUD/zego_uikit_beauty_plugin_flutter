@@ -6,6 +6,7 @@ import 'package:zego_uikit_beauty_plugin/src/components/icon_define.dart';
 import 'package:zego_uikit_beauty_plugin/src/define.dart';
 import 'package:zego_uikit_beauty_plugin/src/models/model.dart';
 import 'package:zego_uikit_beauty_plugin/zego_uikit_beauty_plugin.dart';
+import 'package:zego_uikit_beauty_plugin/src/components/screen_util/screen_util.dart';
 
 /// BeautyItemClick
 typedef BeautyItemClick = void Function(ZegoBeautyItemBaseModel model);
@@ -15,13 +16,13 @@ typedef BeautyItemResetClick = void Function(ZegoBeautyItemCleanModel model);
 
 /// ZegoUIKitBeautyCollectionView
 class ZegoUIKitBeautyCollectionView extends StatefulWidget {
-  const ZegoUIKitBeautyCollectionView(
-      {required this.selectItemModelNotifier,
-      this.tabModel,
-      this.itemClickCallBack,
-      this.itemResetCallBack,
-      Key? key})
-      : super(key: key);
+  const ZegoUIKitBeautyCollectionView({
+    required this.selectItemModelNotifier,
+    this.tabModel,
+    this.itemClickCallBack,
+    this.itemResetCallBack,
+    Key? key,
+  }) : super(key: key);
 
   final ZegoTwoLevelBaseTabModel? tabModel;
   final BeautyItemClick? itemClickCallBack;
@@ -49,10 +50,43 @@ class _ZegoUIKitBeautyCollectionView
     super.dispose();
   }
 
+  /// 创建图标容器的通用方法
+  Widget _buildIconContainer({
+    required String imagePath,
+    double? radius,
+    bool hasBorder = false,
+    Color? borderColor,
+    Widget? overlay,
+  }) {
+    return SizedBox(
+      width: 45.zR,
+      height: 45.zR,
+      child: Container(
+        width: 44.zR,
+        height: 44.zR,
+        decoration: hasBorder && radius != null
+            ? BoxDecoration(
+                border: Border.all(
+                  color: borderColor ?? Colors.red,
+                  width: 1.zW,
+                ),
+                borderRadius: BorderRadius.circular(radius),
+              )
+            : null,
+        child: Stack(
+          children: [
+            BeautyImage.asset(imagePath),
+            if (overlay != null) overlay,
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80,
+      height: 80.zH,
       color: ZegoUIKitBeautyPlugin
           .instance.core.effectsConfig.uiConfig.backgroundColor,
       child: ListView.builder(
@@ -71,12 +105,6 @@ class _ZegoUIKitBeautyCollectionView
       onTap: () {
         if (ZegoUIKitBeautyPlugin.instance.core.isSelectStyleMakeup.value &&
             (widget.tabModel is ZegoStickerTabModel)) {
-          return;
-        }
-        if (ZegoUIKitBeautyPlugin.instance.core.isSelectSticker.value &&
-            ((widget.tabModel is ZegoBeautyTabModel) &&
-                (widget.tabModel as ZegoBeautyTabModel).type ==
-                    ZegoUIKitBeautyTabType.styleMakeup)) {
           return;
         }
         if (model is ZegoBeautyItemModel) {
@@ -98,26 +126,22 @@ class _ZegoUIKitBeautyCollectionView
         }
       },
       child: SizedBox(
-        width: 90,
-        height: 80,
+        width: 90.zW,
+        height: 80.zH,
         child: Column(
           children: [
-            const SizedBox(
-              height: 15,
-            ),
+            SizedBox(height: 15.zH),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(
-                  width: 15,
-                ),
+                SizedBox(width: 15.zW),
                 Column(
                   children: [
                     itemImageView(model),
                     SizedBox(
-                      height: 20,
-                      width: 75,
+                      height: 20.zH,
+                      width: 75.zW,
                       child: Text(
                         model.title,
                         style: ZegoUIKitBeautyPlugin.instance.core.effectsConfig
@@ -154,46 +178,32 @@ class _ZegoUIKitBeautyCollectionView
                   .contains(model.type) ||
               ZegoUIKitBeautyTranslation.filterDreamyEffectsTypes()
                   .contains(model.type) ||
-              ZegoUIKitBeautyTranslation.stickersEffectsTypes()
-                  .contains(model.type) ||
               ZegoUIKitBeautyTranslation.backgroundEffectsTypes()
                   .contains(model.type)
-          ? 6
-          : 22.5;
+          ? 6.zR
+          : 22.5.zR;
 
       if (isBasicOrAdvance(model)) {
         return ValueListenableBuilder<ZegoBeautyItemModel?>(
             valueListenable: basicAndAdvanceSelectModel,
             builder: (context, basicAndAdvanceModel, _) {
               if (basicAndAdvanceModel == model) {
-                return Container(
-                  width: 45,
-                  height: 45,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                        color: ZegoUIKitBeautyPlugin.instance.core.effectsConfig
-                                .uiConfig.selectedIconBorderColor ??
-                            Colors.red,
-                        width: 1),
+                return _buildIconContainer(
+                  imagePath: imagePath,
+                  radius: radius,
+                  hasBorder: true,
+                  borderColor: ZegoUIKitBeautyPlugin.instance.core.effectsConfig
+                          .uiConfig.selectedIconBorderColor ??
+                      Colors.red,
+                  overlay: ClipRRect(
                     borderRadius: BorderRadius.circular(radius),
-                  ),
-                  child: ClipRRect(
-                    child: SizedBox(
-                      width: 44,
-                      height: 44,
-                      child: imageView(imagePath, model),
-                    ),
+                    child: imageView(imagePath, model),
                   ),
                 );
               } else {
-                return SizedBox(
-                  width: 45,
-                  height: 45,
-                  child: SizedBox(
-                    width: 44,
-                    height: 44,
-                    child: imageView(imagePath, model),
-                  ),
+                return _buildIconContainer(
+                  imagePath: imagePath,
+                  overlay: imageView(imagePath, model),
                 );
               }
             });
@@ -202,34 +212,22 @@ class _ZegoUIKitBeautyCollectionView
             valueListenable: model.isSelect,
             builder: (context, isSelect, _) {
               if (isSelect) {
-                return Container(
-                  width: 45,
-                  height: 45,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                        color: ZegoUIKitBeautyPlugin.instance.core.effectsConfig
-                                .uiConfig.selectedIconBorderColor ??
-                            Colors.red,
-                        width: 1),
+                return _buildIconContainer(
+                  imagePath: imagePath,
+                  radius: radius,
+                  hasBorder: true,
+                  borderColor: ZegoUIKitBeautyPlugin.instance.core.effectsConfig
+                          .uiConfig.selectedIconBorderColor ??
+                      Colors.red,
+                  overlay: ClipRRect(
                     borderRadius: BorderRadius.circular(radius),
-                  ),
-                  child: ClipRRect(
-                    child: SizedBox(
-                      width: 44,
-                      height: 44,
-                      child: imageView(imagePath, model),
-                    ),
+                    child: imageView(imagePath, model),
                   ),
                 );
               } else {
-                return SizedBox(
-                  width: 45,
-                  height: 45,
-                  child: SizedBox(
-                    width: 44,
-                    height: 44,
-                    child: imageView(imagePath, model),
-                  ),
+                return _buildIconContainer(
+                  imagePath: imagePath,
+                  overlay: imageView(imagePath, model),
                 );
               }
             });
@@ -240,17 +238,9 @@ class _ZegoUIKitBeautyCollectionView
                   (model as ZegoBeautyItemCleanModel).type.toString()] ??
               '';
 
-      radius = 22.5;
+      radius = 22.5.zR;
 
-      return SizedBox(
-        width: 45,
-        height: 45,
-        child: SizedBox(
-          width: 44,
-          height: 44,
-          child: BeautyImage.asset(imagePath),
-        ),
-      );
+      return _buildIconContainer(imagePath: imagePath);
     }
   }
 
@@ -263,94 +253,39 @@ class _ZegoUIKitBeautyCollectionView
           valueListenable:
               ZegoUIKitBeautyPlugin.instance.core.isSelectStyleMakeup,
           builder: (context, isSelect, _) {
-            return SizedBox(
-              width: 45,
-              height: 45,
-              child: SizedBox(
-                width: 44,
-                height: 44,
-                child: Stack(
-                  children: [
-                    BeautyImage.asset(imagePath),
-                    if (isSelect)
-                      Container(
-                        color: Colors.black.withValues(alpha: 0.6),
-                      ),
-                  ],
-                ),
-              ),
+            return _buildIconContainer(
+              imagePath: imagePath,
+              overlay: isSelect
+                  ? Container(
+                      color: Colors.black.withValues(alpha: 0.6),
+                    )
+                  : null,
             );
           },
         );
       } else if ((widget.tabModel as ZegoBeautyTabModel).type ==
           ZegoUIKitBeautyTabType.styleMakeup) {
-        return ValueListenableBuilder<bool>(
-            valueListenable:
-                ZegoUIKitBeautyPlugin.instance.core.isSelectSticker,
-            builder: (context, isSelect, _) {
-              return SizedBox(
-                width: 45,
-                height: 45,
-                child: SizedBox(
-                  width: 44,
-                  height: 44,
-                  child: Stack(
-                    children: [
-                      BeautyImage.asset(imagePath),
-                      if (isSelect)
-                        Container(
-                          color: Colors.black.withValues(alpha: 0.6),
-                        ),
-                    ],
-                  ),
-                ),
-              );
-            });
+        return _buildIconContainer(imagePath: imagePath);
       } else {
-        return SizedBox(
-          width: 45,
-          height: 45,
-          child: SizedBox(
-            width: 44,
-            height: 44,
-            child: BeautyImage.asset(imagePath),
-          ),
-        );
+        return _buildIconContainer(imagePath: imagePath);
       }
     } else if (widget.tabModel is ZegoStickerTabModel) {
       return ValueListenableBuilder<bool>(
         valueListenable:
             ZegoUIKitBeautyPlugin.instance.core.isSelectStyleMakeup,
         builder: (context, isSelect, _) {
-          return SizedBox(
-            width: 45,
-            height: 45,
-            child: SizedBox(
-              width: 44,
-              height: 44,
-              child: Stack(
-                children: [
-                  BeautyImage.asset(imagePath),
-                  if (isSelect)
-                    Container(
-                      color: Colors.black.withValues(alpha: 0.6),
-                    ),
-                ],
-              ),
-            ),
+          return _buildIconContainer(
+            imagePath: imagePath,
+            overlay: isSelect
+                ? Container(
+                    color: Colors.black.withValues(alpha: 0.6),
+                  )
+                : null,
           );
         },
       );
     } else {
-      return SizedBox(
-        width: 45,
-        height: 45,
-        child: SizedBox(
-          width: 44,
-          height: 44,
-          child: BeautyImage.asset(imagePath),
-        ),
-      );
+      return _buildIconContainer(imagePath: imagePath);
     }
   }
 
@@ -375,9 +310,6 @@ class _ZegoUIKitBeautyCollectionView
           ZegoUIKitBeautyTranslation.filterDreamyEffectsTypes()
               .contains(model.type)) {
         ZegoUIKitBeautyPlugin.instance.core.updateFilterSelectState(model);
-      } else if (ZegoUIKitBeautyTranslation.stickersEffectsTypes()
-          .contains(model.type)) {
-        ZegoUIKitBeautyPlugin.instance.core.updateStickerSelectState(model);
       } else if (ZegoUIKitBeautyTranslation.backgroundEffectsTypes()
           .contains(model.type)) {
         ZegoUIKitBeautyPlugin.instance.core.updateBackgroundSelectState(model);

@@ -1,104 +1,54 @@
 /// BeautyResource
 class BeautyResource {
-  static const makeupBlusherApricotPink =
-      '/AdvancedResources/beautyMakeupBlusherApricotPink.bundle';
-  static const makeupBlusherMilkyOrange =
-      '/AdvancedResources/beautyMakeupBlusherMilkyOrange.bundle';
-  static const mkeupBlusherPeach =
-      '/AdvancedResources/beautyMakeupBlusherPeach.bundle';
-  static const makeupBlusherSlightlyDrunk =
-      '/AdvancedResources/beautyMakeupBlusherSlightlyDrunk.bundle';
-  static const makeupBlusherSweetOrange =
-      '/AdvancedResources/beautyMakeupBlusherSweetOrange.bundle';
+  static const makeupBlusherApricotPink = 'blusherdir_apricot_pink';
+  static const makeupBlusherMilkyOrange = 'blusherdir_milk_orange';
+  static const makeupBlusherPeach = 'blusherdir_peach';
+  static const makeupBlusherSlightlyDrunk = 'blusherdir_slightly_drunk';
+  static const makeupBlusherSweetOrange = 'blusherdir_sweet_orange';
   static const makeupColoredContactsBrownGreen =
-      '/AdvancedResources/beautyMakeupColoredContactsBrownGreen.bundle';
+      'coloredcontactsdir_mystery_brown_green';
   static const makeupColoredContactsDarknightBlack =
-      '/AdvancedResources/beautyMakeupColoredContactsDarknightBlack.bundle';
+      'coloredcontactsdir_darknight_black';
   static const makeupColoredContactsLightsBrown =
-      '/AdvancedResources/beautyMakeupColoredContactsLightsBrown.bundle';
+      'coloredcontactsdir_polar_lights_brown';
   static const makeupColoredContactsStarryBlue =
-      '/AdvancedResources/beautyMakeupColoredContactsStarryBlue.bundle';
-  static const makeupEyelashesCurl =
-      '/AdvancedResources/beautyMakeupEyelashesCurl.bundle';
-  static const makeupEyelashesEverlong =
-      '/AdvancedResources/beautyMakeupEyelashesEverlong.bundle';
-  static const makeupEyelashesNatural =
-      '/AdvancedResources/beautyMakeupEyelashesNatural.bundle';
-  static const makeupEyelashesTender =
-      '/AdvancedResources/beautyMakeupEyelashesTender.bundle';
-  static const makeupEyelashesThick =
-      '/AdvancedResources/beautyMakeupEyelashesThick.bundle';
-  static const makeupEyelinerCatEye =
-      '/AdvancedResources/beautyMakeupEyelinerCatEye.bundle';
-  static const makeupEyelinerDignified =
-      '/AdvancedResources/beautyMakeupEyelinerDignified.bundle';
-  static const makeupEyelinerInnocent =
-      '/AdvancedResources/beautyMakeupEyelinerInnocent.bundle';
-  static const makeupEyelinerNatural =
-      '/AdvancedResources/beautyMakeupEyelinerNatural.bundle';
-  static const makeupEyelinerNaughty =
-      '/AdvancedResources/beautyMakeupEyelinerNaughty.bundle';
-  static const makeupEyeshadowBrightOrange =
-      '/AdvancedResources/beautyMakeupEyeshadowBrightOrange.bundle';
-  static const makeupEyeshadowMochaBrown =
-      '/AdvancedResources/beautyMakeupEyeshadowMochaBrown.bundle';
-  static const makeupEyeshadowPinkMist =
-      '/AdvancedResources/beautyMakeupEyeshadowPinkMist.bundle';
-  static const makeupEyeshadowShimmerPink =
-      '/AdvancedResources/beautyMakeupEyeshadowShimmerPink.bundle';
-  static const makeupEyeshadowTeaBrown =
-      '/AdvancedResources/beautyMakeupEyeshadowTeaBrown.bundle';
-  static const makeupLipstickCameoPink =
-      '/AdvancedResources/beautyMakeupLipstickCameoPink.bundle';
-  static const makeupLipstickCoral =
-      '/AdvancedResources/beautyMakeupLipstickCoral.bundle';
-  static const makeupLipstickRedVelvet =
-      '/AdvancedResources/beautyMakeupLipstickRedVelvet.bundle';
-  static const makeupLipstickRustRed =
-      '/AdvancedResources/beautyMakeupLipstickRustRed.bundle';
-  static const makeupLipstickSweetOrange =
-      '/AdvancedResources/beautyMakeupLipstickSweetOrange.bundle';
+      'coloredcontactsdir_starry_blue';
+  static const makeupEyelashesCurl = 'eyelashesdir_curl';
+  static const makeupEyelashesEverlong = 'eyelashesdir_slender';
+  static const makeupEyelashesNatural = 'eyelashesdir_natural';
+  static const makeupEyelashesTender = 'eyelashesdir_tender';
+  static const makeupEyelashesThick = 'eyelashesdir_bushy';
+  static const makeupEyelinerCatEye = 'eyelinerdir_wildcat';
+  static const makeupEyelinerDignified = 'eyelinerdir_pretty';
+  static const makeupEyelinerInnocent = 'eyelinerdir_temperament';
+  static const makeupEyelinerNatural = 'eyelinerdir_natural';
+  static const makeupEyelinerNaughty = 'eyelinerdir_scheming';
+  static const makeupEyeshadowBrightOrange = 'eyeshadowdir_vitality_orange';
+  static const makeupEyeshadowMochaBrown = 'eyeshadowdir_mocha_brown';
+  static const makeupEyeshadowPinkMist = 'eyeshadowdir_mist_pink';
+  static const makeupEyeshadowShimmerPink = 'eyeshadowdir_shimmer_pink';
+  static const makeupEyeshadowTeaBrown = 'eyeshadowdir_tea_brown';
+  static const makeupLipstickCameoPink = 'lipstickdir_bean_paste_pink';
+  static const makeupLipstickCoral = 'lipstickdir_coral';
+  static const makeupLipstickRedVelvet = 'lipstickdir_velvet_red';
+  static const makeupLipstickRustRed = 'lipstickdir_rust_red';
+  static const makeupLipstickSweetOrange = 'lipstickdir_sweet_orange';
 
-  static const stypelMakeupFlawless =
-      '/AdvancedResources/beautyStyleMakeupFlawless.bundle';
-  static const stypelMakeupInnocentEyes =
-      '/AdvancedResources/beautyStyleMakeupInnocentEyes.bundle';
-  static const stypelMakeupMilkyEyes =
-      '/AdvancedResources/beautyStyleMakeupMilkyEyes.bundle';
-  static const stypelMakeupPureSexy =
-      '/AdvancedResources/beautyStyleMakeupPureSexy.bundle';
-  static const stypelMakeupCutieCool =
-      '/AdvancedResources/beautyStyleMakeupCutieCool.bundle';
+  static const styleMakeupFlawless = 'makeupdir_flawless';
+  static const styleMakeupInnocentEyes =
+      'makeupdir_vulnerable_and_innocenteyes';
+  static const styleMakeupMilkyEyes = 'makeupdir_milky_eyes';
+  static const styleMakeupPureSexy = 'makeupdir_pure_and_sexy';
+  static const styleMakeupCutieCool = 'makeupdir_cutie_and_cool';
 
-  static const fileterDreamyCozily =
-      '/AdvancedResources/filterDreamyCozily.bundle';
-  static const filterDreamySunset =
-      '/AdvancedResources/filterDreamySunset.bundle';
-  static const filterDreamySweet =
-      '/AdvancedResources/filterDreamySweet.bundle';
-  static const filterGrayFilmlike =
-      '/AdvancedResources/filterGrayFilmlike.bundle';
-  static const filterGrayMonet = '/AdvancedResources/filterGrayMonet.bundle';
-  static const filterGrayNight = '/AdvancedResources/filterGrayNight.bundle';
-  static const filterNaturalAutumn =
-      '/AdvancedResources/filterNaturalAutumn.bundle';
-  static const filterNaturalBrighten =
-      '/AdvancedResources/filterNaturalBrighten.bundle';
-  static const filterNaturalCreamy =
-      '/AdvancedResources/filterNaturalCreamy.bundle';
-  static const filterNaturalFresh =
-      '/AdvancedResources/filterNaturalFresh.bundle';
-
-  static const stickerAnimal = '/AdvancedResources/stickerAnimal.bundle';
-  static const stickerCat = '/AdvancedResources/stickerCat.bundle';
-  static const stickerClawMachine =
-      '/AdvancedResources/stickerClawMachine.bundle';
-  static const stickerClown = '/AdvancedResources/stickerClown.bundle';
-  static const stickerCoolGirl = '/AdvancedResources/stickerCoolGirl.bundle';
-  static const stickerDeer = '/AdvancedResources/stickerDeer.bundle';
-  static const stickerDive = '/AdvancedResources/stickerDive.bundle';
-  static const stickerSailorMoon =
-      '/AdvancedResources/stickerSailorMoon.bundle';
-  static const stickerWatermelon =
-      '/AdvancedResources/stickerWatermelon.bundle';
+  static const filterDreamyCozily = 'Cozily';
+  static const filterDreamySunset = 'Sunset';
+  static const filterDreamySweet = 'Sweet';
+  static const filterGrayFilmlike = 'Film-like';
+  static const filterGrayMonet = 'Cool';
+  static const filterGrayNight = 'Night';
+  static const filterNaturalAutumn = 'Autumn';
+  static const filterNaturalBrighten = 'Brighten';
+  static const filterNaturalCreamy = 'Creamy';
+  static const filterNaturalFresh = 'Fresh';
 }

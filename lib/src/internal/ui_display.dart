@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Project imports:
 import 'package:zego_uikit_beauty_plugin/src/components/child_collection_view.dart';
 import 'package:zego_uikit_beauty_plugin/src/components/view.dart';
+import 'package:zego_uikit_beauty_plugin/src/components/screen_util/screen_util.dart';
 import 'package:zego_uikit_beauty_plugin/src/define.dart';
 import 'package:zego_uikit_beauty_plugin/src/models/model.dart';
 import 'package:zego_uikit_beauty_plugin/zego_uikit_beauty_plugin.dart';
@@ -17,7 +18,10 @@ class ZegoBeautyUIDisplay {
   ValueNotifier<ZegoBeautyMakeUpModel?> showMakeupItem = ValueNotifier(null);
 
   /// showBeautyUI
-  void showBeautyUI(BuildContext context) {
+  void showBeautyUI(
+    BuildContext context, {
+    required Size designSize,
+  }) {
     showModalBottomSheet(
       context: context,
       isDismissible: true,
@@ -28,10 +32,17 @@ class ZegoBeautyUIDisplay {
         return ValueListenableBuilder<ZegoBeautyMakeUpModel?>(
           valueListenable: showMakeupItem,
           builder: (context, makeupItemModel, _) {
-            return SafeArea(
-              child: makeupItemModel != null
-                  ? showMakeupUI(makeupItemModel)
-                  : showEffectUI(),
+            return ZegoBeautyScreenUtilInit(
+              designSize: designSize,
+              minTextAdapt: true,
+              splitScreenMode: true,
+              builder: (context, child) {
+                return SafeArea(
+                  child: makeupItemModel != null
+                      ? showMakeupUI(makeupItemModel)
+                      : showEffectUI(),
+                );
+              },
             );
           },
         );
@@ -47,7 +58,7 @@ class ZegoBeautyUIDisplay {
   /// effectSheet
   Widget effectSheet() {
     return SizedBox(
-      height: 235 + 15,
+      height: 235.zH + 15.zH,
       child: AnimatedPadding(
         padding: const EdgeInsets.all(0),
         duration: const Duration(milliseconds: 50),

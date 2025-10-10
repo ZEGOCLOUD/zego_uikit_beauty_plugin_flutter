@@ -6,6 +6,7 @@ import 'package:zego_uikit_beauty_plugin/src/components/icon_define.dart';
 import 'package:zego_uikit_beauty_plugin/src/define.dart';
 import 'package:zego_uikit_beauty_plugin/src/models/model.dart';
 import 'package:zego_uikit_beauty_plugin/zego_uikit_beauty_plugin.dart';
+import 'package:zego_uikit_beauty_plugin/src/components/screen_util/screen_util.dart';
 
 /// MakeupItemClick
 typedef MakeupItemClick = void Function(ZegoBeautyMakeUpModel model);
@@ -49,15 +50,16 @@ class _ZegoUIKitBeautyMakeupView extends State<ZegoUIKitBeautyMakeupView> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 84,
+      height: 84.zH,
       color: ZegoUIKitBeautyPlugin
           .instance.core.effectsConfig.uiConfig.backgroundColor,
       child: ListView.builder(
-          itemCount: showList.length,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) {
-            return itemView(showList[index]);
-          }),
+        itemCount: showList.length,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          return itemView(showList[index]);
+        },
+      ),
     );
   }
 
@@ -79,20 +81,16 @@ class _ZegoUIKitBeautyMakeupView extends State<ZegoUIKitBeautyMakeupView> {
         }
       },
       child: SizedBox(
-        width: 90,
-        height: 84,
+        width: 90.zW,
+        height: 84.zH,
         child: Column(
           children: [
-            const SizedBox(
-              height: 15,
-            ),
+            SizedBox(height: 15.zH),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(
-                  width: 15,
-                ),
+                SizedBox(width: 15.zW),
                 itemColumView(model),
               ],
             ),
@@ -106,34 +104,35 @@ class _ZegoUIKitBeautyMakeupView extends State<ZegoUIKitBeautyMakeupView> {
   Widget itemColumView(dynamic model) {
     if (model is ZegoBeautyMakeUpModel) {
       return ValueListenableBuilder<bool>(
-          valueListenable: model.isSelect,
-          builder: (context, isSelect, _) {
-            return Column(
-              children: [
-                itemImageView(model),
-                SizedBox(
-                  height: 20,
-                  width: 75,
-                  child: Text(
-                    model.title,
-                    style: ZegoUIKitBeautyPlugin
-                        .instance.core.effectsConfig.uiConfig.normalTextStyle,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.center,
-                    maxLines: 1,
-                  ),
+        valueListenable: model.isSelect,
+        builder: (context, isSelect, _) {
+          return Column(
+            children: [
+              itemImageView(model),
+              SizedBox(
+                width: 75.zW,
+                height: 20.zH,
+                child: Text(
+                  model.title,
+                  style: ZegoUIKitBeautyPlugin
+                      .instance.core.effectsConfig.uiConfig.normalTextStyle,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
                 ),
-                if (isSelect) redDot(),
-              ],
-            );
-          });
+              ),
+              if (isSelect) redDot(),
+            ],
+          );
+        },
+      );
     } else if (model is ZegoBeautyItemCleanModel) {
       return Column(
         children: [
           itemImageView(model),
           SizedBox(
-            height: 20,
-            width: 75,
+            width: 75.zW,
+            height: 20.zH,
             child: Text(
               model.title,
               style: ZegoUIKitBeautyPlugin
@@ -170,38 +169,38 @@ class _ZegoUIKitBeautyMakeupView extends State<ZegoUIKitBeautyMakeupView> {
   /// imageView
   Widget imageView(String imagePath, dynamic model) {
     return ValueListenableBuilder<bool>(
-        valueListenable:
-            ZegoUIKitBeautyPlugin.instance.core.isSelectStyleMakeup,
-        builder: (context, isSelect, _) {
-          return SizedBox(
-            width: 45,
-            height: 45,
-            child: SizedBox(
-              width: 44,
-              height: 44,
-              child: Stack(
-                children: [
-                  BeautyImage.asset(imagePath),
-                  if (isSelect)
-                    Container(
-                      color: Colors.black.withValues(alpha: 0.6),
-                    ),
-                ],
-              ),
+      valueListenable: ZegoUIKitBeautyPlugin.instance.core.isSelectStyleMakeup,
+      builder: (context, isSelect, _) {
+        return SizedBox(
+          width: 45.zR,
+          height: 45.zR,
+          child: SizedBox(
+            width: 44.zR,
+            height: 44.zR,
+            child: Stack(
+              children: [
+                BeautyImage.asset(imagePath),
+                if (isSelect)
+                  Container(
+                    color: Colors.black.withValues(alpha: 0.6),
+                  ),
+              ],
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 
   /// redDot
   Widget redDot() {
     return Container(
-      width: 4,
-      height: 4,
+      width: 4.zR,
+      height: 4.zR,
       decoration: BoxDecoration(
           color: ZegoUIKitBeautyPlugin
               .instance.core.effectsConfig.uiConfig.selectedIconDotColor,
-          borderRadius: BorderRadius.circular(2)),
+          borderRadius: BorderRadius.circular(2.zR)),
     );
   }
 }
