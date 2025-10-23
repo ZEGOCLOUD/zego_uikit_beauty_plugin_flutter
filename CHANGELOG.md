@@ -1,3 +1,11 @@
+## 2.0.1
+
+- Update dependency
+
+## 2.0.0
+
+- Update to effect v2
+
 ## 1.7.12
 
 - Update environment

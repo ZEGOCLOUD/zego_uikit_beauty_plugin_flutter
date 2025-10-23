@@ -1,6 +1,6 @@
 name: zego_uikit_beauty_plugin
 description: ZegoUIKitBeautyPlugin is a low-code beauty collection, which helps you to integarte features easier and faster.
-version: 2.0.0
+version: 2.0.1
 homepage: https://www.zegocloud.com/
 
 environment:
@@ -12,8 +12,7 @@ dependencies:
     sdk: flutter
   plugin_platform_interface: ^2.1.8
   
-  zego_effects_plugin: ^2.2.5
-#  zego_effects_plugin: ^2.2.7-uikit
+  zego_effects_plugin: ^2.2.7-uikit
 
   zego_plugin_adapter: ^2.14.0
   shared_preferences: ^2.2.2
