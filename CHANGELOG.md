@@ -1,3 +1,8 @@
+## 2.0.2
+
+- Bugs
+  - Fix the black screen issue caused by beauty init failure
+
 ## 2.0.1
 
 - Update dependency

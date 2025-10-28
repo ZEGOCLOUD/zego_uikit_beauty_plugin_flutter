@@ -76,11 +76,6 @@ class ZegoUIKitBeautyCore {
       subTag: 'onEffectsError',
     );
 
-    if (errorCode == 5000002) {
-      //license is expired
-      await init(appID: appID, appSign: appSign);
-    }
-
     errorStreamCtrl.add(
       ZegoBeautyError(
         code: errorCode,
@@ -1202,6 +1197,10 @@ class ZegoUIKitBeautyCore {
       onEffectsFaceDetected: onEffectsFaceDetected,
     );
 
+    /// This API must be called regardless of success or failure;
+    /// otherwise, a black screen will appear when it fails
+    await ZegoEffectsPlugin.instance.enableImageProcessing(true);
+
     final createRetCode =
         await ZegoEffectsPlugin.instance.create(appID, appSign);
     ZegoBeautyLoggerService.logInfo(
@@ -1213,7 +1212,6 @@ class ZegoUIKitBeautyCore {
     if (0 != createRetCode) {
       onEffectsError(createRetCode, '');
     } else {
-      await ZegoEffectsPlugin.instance.enableImageProcessing(true);
       await ZegoEffectsPlugin.instance.enableFaceDetection(true);
     }
 
