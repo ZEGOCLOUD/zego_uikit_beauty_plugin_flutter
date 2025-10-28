@@ -104,7 +104,6 @@ class ZegoBeautyEffectValueSetting {
             case ZegoUIKitBeautyMakeupType.eyeliner:
               element.effectValue.value = 60;
               break;
-            default:
           }
           ZegoBeautyEffectRecord.instance.delectEffectRecord(element.type);
         }
@@ -135,7 +134,6 @@ class ZegoBeautyEffectValueSetting {
       case ZegoUIKitBeautyMakeupType.color:
         ZegoEffectsPlugin.instance.setColoredcontacts('');
         break;
-      default:
     }
 
     for (var makeupElement in tabModel.makeupModels) {
