@@ -155,7 +155,6 @@ class ZegoBeautyEffectValueSetting {
               case ZegoUIKitBeautyMakeupType.eyeliner:
                 element.effectValue.value = 60;
                 break;
-              default:
             }
           }
         }
