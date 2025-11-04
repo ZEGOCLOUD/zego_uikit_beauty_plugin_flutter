@@ -12,9 +12,9 @@ dependencies:
     sdk: flutter
   plugin_platform_interface: ^2.1.8
   
-  zego_effects_plugin: ^2.2.7-uikit
+  zego_effects_plugin: ^2.2.8-uikit
 
-  zego_plugin_adapter: ^2.14.0
+  zego_plugin_adapter: ^2.14.1
   shared_preferences: ^2.2.2
   path_provider_android: ^2.2.0
   

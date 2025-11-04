@@ -156,7 +156,8 @@ class ZegoUIKitBeautyPlugin implements ZegoBeautyPluginInterface {
 
   @override
   Stream<ZegoBeautyPluginFaceDetectionData> getFaceDetectionEventStream() {
-    return const Stream.empty();
+    return ZegoUIKitBeautyPlugin
+        .instance.core.faceDetectionDataStreamCtrl.stream;
   }
 
   @override

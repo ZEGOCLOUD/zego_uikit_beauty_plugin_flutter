@@ -1,3 +1,8 @@
+## 2.0.3
+
+- Features
+  - Add `face detection result` callback
+
 ## 2.0.2
 
 - Bugs

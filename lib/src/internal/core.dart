@@ -42,6 +42,9 @@ class ZegoUIKitBeautyCore {
 
   StreamController<ZegoBeautyError> errorStreamCtrl =
       StreamController<ZegoBeautyError>.broadcast();
+  StreamController<ZegoBeautyPluginFaceDetectionData>
+      faceDetectionDataStreamCtrl =
+      StreamController<ZegoBeautyPluginFaceDetectionData>.broadcast();
 
   /// init
   Future<void> init({
@@ -90,11 +93,13 @@ class ZegoUIKitBeautyCore {
     Point point,
     Size size,
   ) async {
-    // ZegoBeautyLoggerService.logInfo(
-    //   'score: $score, point: $point, size: $size',
-    //   tag: 'beauty',
-    //   subTag: 'onEffectsFaceDetected',
-    // );
+    faceDetectionDataStreamCtrl.add(
+      ZegoBeautyPluginFaceDetectionData(
+        score,
+        point,
+        size,
+      ),
+    );
   }
 
   Future<void> setBeautyParams(List<ZegoBeautyParamConfig> paramConfigList,
