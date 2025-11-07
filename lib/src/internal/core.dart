@@ -1201,18 +1201,19 @@ class ZegoUIKitBeautyCore {
       onEffectsFaceDetected: onEffectsFaceDetected,
     );
 
-    /// This API must be called regardless of success or failure;
-    /// otherwise, a black screen will appear when it fails
-    await ZegoEffectsPlugin.instance.enableImageProcessing(true);
-
-    final createRetCode =
-        await ZegoEffectsPlugin.instance.create(appID, appSign);
+    final createRetCode = await ZegoEffectsPlugin.instance.create(
+      appID,
+      appSign,
+    );
     ZegoBeautyLoggerService.logInfo(
       'create done, result: $createRetCode',
       tag: 'beauty',
       subTag: 'initEffects',
     );
 
+    /// This API must be called regardless of success or failure;
+    /// otherwise, a black screen will appear when it fails
+    await ZegoEffectsPlugin.instance.enableImageProcessing(true);
     if (0 != createRetCode) {
       onEffectsError(createRetCode, '');
     } else {

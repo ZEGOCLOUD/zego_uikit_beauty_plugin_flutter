@@ -1,3 +1,9 @@
+
+## 2.0.4
+
+- Bugs
+  - Fix the issue where beauty filter has no effect
+
 ## 2.0.3
 
 - Features
