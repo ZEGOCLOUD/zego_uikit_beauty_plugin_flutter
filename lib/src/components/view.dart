@@ -6,10 +6,10 @@ import 'package:zego_plugin_adapter/zego_plugin_adapter.dart';
 
 // Project imports:
 import 'package:zego_uikit_beauty_plugin/src/components/collection_view.dart';
-import 'package:zego_uikit_beauty_plugin/src/components/screen_util/screen_util.dart';
 import 'package:zego_uikit_beauty_plugin/src/components/effect_slider.dart';
 import 'package:zego_uikit_beauty_plugin/src/components/main_tab.dart';
 import 'package:zego_uikit_beauty_plugin/src/components/makeup_view.dart';
+import 'package:zego_uikit_beauty_plugin/src/components/screen_util/screen_util.dart';
 import 'package:zego_uikit_beauty_plugin/src/components/second_level_tab.dart';
 import 'package:zego_uikit_beauty_plugin/src/define.dart';
 import 'package:zego_uikit_beauty_plugin/src/models/model.dart';

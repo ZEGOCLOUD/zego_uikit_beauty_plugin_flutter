@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
+import 'package:zego_uikit_beauty_plugin/src/components/screen_util/screen_util.dart';
 import 'package:zego_uikit_beauty_plugin/src/models/model.dart';
 import 'package:zego_uikit_beauty_plugin/zego_uikit_beauty_plugin.dart';
-import 'package:zego_uikit_beauty_plugin/src/components/screen_util/screen_util.dart';
 
 /// ZegoBeautyEffectSlider
 class ZegoBeautyEffectSlider extends StatefulWidget {
