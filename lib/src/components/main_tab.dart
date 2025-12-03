@@ -12,11 +12,11 @@ typedef MainTabButtonClick = void Function(ZegoBeautyOneLevelModel model);
 /// ZegoUIKitBeautyMainTab
 class ZegoUIKitBeautyMainTab extends StatefulWidget {
   const ZegoUIKitBeautyMainTab({
-    Key? key,
+    super.key,
     required this.mainTabList,
     required this.defaultSelectNoti,
     this.tabClickCallBack,
-  }) : super(key: key);
+  });
 
   final List<ZegoBeautyOneLevelModel> mainTabList;
   final ValueNotifier<ZegoBeautyOneLevelModel> defaultSelectNoti;
@@ -91,12 +91,12 @@ class _ZegoUIKitBeautyMainTabState extends State<ZegoUIKitBeautyMainTab> {
 /// TabButton
 class TabButton extends StatefulWidget {
   const TabButton({
-    Key? key,
+    super.key,
     required this.model,
     required this.buttonSize,
     required this.isSelect,
     this.tabClickCallBack,
-  }) : super(key: key);
+  });
 
   final ZegoBeautyOneLevelModel model;
   final Size buttonSize;

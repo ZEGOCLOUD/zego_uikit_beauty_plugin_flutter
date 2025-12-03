@@ -21,8 +21,8 @@ class ZegoUIKitBeautyCollectionView extends StatefulWidget {
     this.tabModel,
     this.itemClickCallBack,
     this.itemResetCallBack,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final ZegoTwoLevelBaseTabModel? tabModel;
   final BeautyItemClick? itemClickCallBack;

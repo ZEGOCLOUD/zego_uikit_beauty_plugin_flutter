@@ -12,11 +12,11 @@ typedef TwoLevelTabButtonClick = void Function(ZegoTwoLevelBaseTabModel model);
 /// ZegoUIKitBeautySecondLevelTab
 class ZegoUIKitBeautySecondLevelTab extends StatefulWidget {
   const ZegoUIKitBeautySecondLevelTab({
-    Key? key,
+    super.key,
     required this.tabList,
     required this.defaultSelectNoti,
     this.tabButtonClick,
-  }) : super(key: key);
+  });
 
   final List<ZegoTwoLevelBaseTabModel> tabList;
   final TwoLevelTabButtonClick? tabButtonClick;
@@ -95,12 +95,12 @@ class _ZegoUIKitBeautySecondLevelTabState
 /// TabButton
 class TabButton extends StatefulWidget {
   const TabButton({
-    Key? key,
+    super.key,
     required this.model,
     required this.buttonSize,
     required this.isSelect,
     this.tabButtonClick,
-  }) : super(key: key);
+  });
 
   final ZegoTwoLevelBaseTabModel model;
   final TwoLevelTabButtonClick? tabButtonClick;

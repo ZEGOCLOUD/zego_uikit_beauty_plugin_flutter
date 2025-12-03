@@ -21,8 +21,8 @@ class ZegoUIKitBeautyView extends StatefulWidget {
     required this.mainModel,
     required this.showSlider,
     required this.twoLevelSelect,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   final ZegoBeautyMainModel mainModel;
   final ValueNotifier<ZegoTwoLevelBaseTabModel?> twoLevelSelect;
   final ValueNotifier<ZegoBeautyItemModel?> showSlider;

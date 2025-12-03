@@ -21,8 +21,8 @@ class ZegoBeautyChildCollectionView extends StatefulWidget {
     required this.showSlider,
     this.childItemClickCallBack,
     this.childBackClickCallBack,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final ZegoBeautyMakeUpModel model;
   final BeautyChildItemClick? childItemClickCallBack;

@@ -71,7 +71,7 @@ abstract class ZegoBeautyFontSizeResolvers {
 class ZegoBeautyScreenUtilInit extends StatefulWidget {
   /// A helper widget that initializes [ZegoBeautyScreenUtil]
   const ZegoBeautyScreenUtilInit({
-    Key? key,
+    super.key,
     this.builder,
     this.child,
     this.rebuildFactor = ZegoBeautyRebuildFactors.size,
@@ -82,7 +82,7 @@ class ZegoBeautyScreenUtilInit extends StatefulWidget {
     this.ensureScreenSize,
     this.responsiveWidgets,
     this.fontSizeResolver = ZegoBeautyFontSizeResolvers.width,
-  }) : super(key: key);
+  });
 
   final ZegoBeautyScreenUtilInitBuilder? builder;
   final Widget? child;

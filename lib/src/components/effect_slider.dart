@@ -18,7 +18,7 @@ class ZegoBeautyEffectSlider extends StatefulWidget {
   final String Function(int)? labelFormatFunc;
 
   const ZegoBeautyEffectSlider({
-    Key? key,
+    super.key,
     required this.itemModel,
     required this.defaultValue,
     required this.maxValue,
@@ -26,7 +26,7 @@ class ZegoBeautyEffectSlider extends StatefulWidget {
     this.thumpHeight,
     this.trackHeight,
     this.labelFormatFunc,
-  }) : super(key: key);
+  });
 
   @override
   State<ZegoBeautyEffectSlider> createState() => _ZegoBeautyEffectSliderState();

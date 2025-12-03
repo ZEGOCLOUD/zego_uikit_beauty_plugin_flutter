@@ -20,8 +20,8 @@ class ZegoUIKitBeautyMakeupView extends StatefulWidget {
     this.tabModel,
     this.makeClickCallBack,
     this.makeupCleanClickCallBack,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final ZegoBeautyTabModel? tabModel;
   final MakeupItemClick? makeClickCallBack;

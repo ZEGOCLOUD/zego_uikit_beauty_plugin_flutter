@@ -96,8 +96,7 @@ class ZegoBeautyItemCleanModel extends ZegoBeautyItemBaseModel {
   final ZegoUIKitBeautyResetType type;
   final ZegoUIKitResetEffectType resetType;
 
-  ZegoBeautyItemCleanModel(String title, this.type, this.resetType)
-      : super(title);
+  ZegoBeautyItemCleanModel(super.title, this.type, this.resetType);
 }
 
 /// BeautyItemModel
@@ -108,7 +107,6 @@ class ZegoBeautyItemModel extends ZegoBeautyItemBaseModel {
   final int maxValue;
   final int minValue;
 
-  ZegoBeautyItemModel(String title, this.isSelect, this.type, this.effectValue,
-      {this.maxValue = 100, this.minValue = 0})
-      : super(title);
+  ZegoBeautyItemModel(super.title, this.isSelect, this.type, this.effectValue,
+      {this.maxValue = 100, this.minValue = 0});
 }
