@@ -14,7 +14,7 @@ dependencies:
   
   zego_effects_plugin: ^2.2.8-uikit
 
-  zego_plugin_adapter: ^2.14.1
+  zego_plugin_adapter: ^2.14.2
   shared_preferences: ^2.2.2
   path_provider_android: ^2.2.0
   
